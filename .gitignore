@@ -1,29 +1,82 @@
-# Logs
-logs
-*.log
+
+# ==========================================
+# VARIABLES DE ENTORNO Y CREDENCIALES
+# ==========================================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials/
+
+# ==========================================
+# NODE.JS / REACT / TYPESCRIPT
+# ==========================================
+node_modules/
+dist/
+build/
+.next/
+.nuxt/
+coverage/
+.vite/
+*.tsbuildinfo
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# ==========================================
+# PYTHON
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+venv/
+.venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
-# Editor directories and files
-.vs/
+# ==========================================
+# BASES DE DATOS LOCALES
+# ==========================================
+*.sqlite
+*.sqlite3
+*.db
+
+# ==========================================
+# IDE Y EDITORES
+# ==========================================
 .vscode/*
 !.vscode/extensions.json
-.idea
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# ==========================================
+# SISTEMA OPERATIVO
+# ==========================================
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-# Backend Mongo files
-backend/_tmp/
-backend/diagnostic.data/
-backend/journal/
+Thumbs.db
+desktop.ini
+
+# ==========================================
+# LOGS Y ARCHIVOS TEMPORALES
+# ==========================================
+*.log
+tmp/
+temp/
+.cache/
+
+# ==========================================
+# DOCKER
+# ==========================================
+.env.docker
+
