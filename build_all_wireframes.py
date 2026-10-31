@@ -1,0 +1,775 @@
+# -*- coding: utf-8 -*-
+import os
+
+COMMON_DEFS = '''  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+      text { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      .title-canvas { font-size: 28px; font-weight: 700; fill: #0F172A; }
+      .subtitle-canvas { font-size: 15px; font-weight: 400; fill: #64748B; }
+      .badge-tag { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+      .screen-title { font-size: 18px; font-weight: 700; fill: #1E293B; }
+      .browser-url { font-size: 12px; fill: #64748B; }
+      .nav-link { font-size: 13px; font-weight: 500; fill: #475569; }
+      .hero-h1 { font-size: 26px; font-weight: 800; fill: #0F172A; }
+      .hero-p { font-size: 13px; fill: #64748B; line-height: 1.4; }
+      .card-title { font-size: 14px; font-weight: 600; fill: #0F172A; }
+      .card-sub { font-size: 11px; fill: #64748B; }
+      .price-main { font-size: 16px; font-weight: 700; fill: #0284C7; }
+      .btn-text { font-size: 12px; font-weight: 600; fill: #FFFFFF; }
+      .table-th { font-size: 11px; font-weight: 600; fill: #475569; text-transform: uppercase; }
+      .table-td { font-size: 12px; fill: #1E293B; }
+    </style>
+    <filter id="shadow-frame" x="-2%" y="-1%" width="104%" height="103%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    <filter id="shadow-card" x="-3%" y="-3%" width="106%" height="108%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.05"/>
+    </filter>
+  </defs>'''
+
+def browser_chrome(x, y, w, h, title, url):
+    return f'''
+    <!-- Window Frame -->
+    <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-frame)"/>
+    <!-- Window Top Header -->
+    <path d="M {x} {y+12} Q {x} {y} {x+12} {y} L {x+w-12} {y} Q {x+w} {y} {x+w} {y+12} L {x+w} {y+40} L {x} {y+40} Z" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+    <!-- Window Controls -->
+    <circle cx="{x+20}" cy="{y+20}" r="5" fill="#EF4444"/>
+    <circle cx="{x+36}" cy="{y+20}" r="5" fill="#F59E0B"/>
+    <circle cx="{x+52}" cy="{y+20}" r="5" fill="#10B981"/>
+    <!-- Browser URL Bar -->
+    <rect x="{x+100}" y="{y+8}" width="{w-280}" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="{x+112}" y="{y+24}" class="browser-url">{url}</text>
+    <!-- Frame Title Tag -->
+    <text x="{x}" y="{y-16}" class="screen-title">{title}</text>
+    '''
+
+def get_screen_1(x=0, y=0):
+    w, h = 1200, 780
+    chrome = browser_chrome(x, y, w, h, "PANTALLA 1: Home & Buscador de Medicamentos", "https://farmalink.com.co/")
+    body = f'''
+    <g transform="translate({x}, {y+41})">
+      <!-- Navbar -->
+      <rect x="0" y="0" width="{w}" height="56" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <rect x="30" y="14" width="28" height="28" rx="6" fill="#0284C7"/>
+      <path d="M 44 21 L 44 35 M 37 28 L 51 28" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+      <text x="68" y="33" font-size="16" font-weight="700" fill="#0F172A">Farmalink<tspan fill="#0284C7">SAS</tspan></text>
+      
+      <text x="230" y="33" class="nav-link">Inicio</text>
+      <text x="290" y="33" class="nav-link">Medicamentos</text>
+      <text x="410" y="33" class="nav-link">Farmacias Cercanas</text>
+      <text x="560" y="33" class="nav-link">Categorías</text>
+      <text x="660" y="33" class="nav-link">Quiénes Somos</text>
+
+      <rect x="940" y="12" width="100" height="32" rx="6" fill="#F1F5F9" stroke="#CBD5E1"/>
+      <text x="965" y="32" font-size="12" font-weight="600" fill="#475569">Ingresar</text>
+      <rect x="1055" y="12" width="115" height="32" rx="6" fill="#0284C7"/>
+      <text x="1075" y="32" class="btn-text">Registrarse</text>
+      
+      <circle cx="905" cy="28" r="14" fill="#F8FAFC" stroke="#CBD5E1"/>
+      <circle cx="913" cy="20" r="6" fill="#EF4444"/>
+      <text x="911" y="24" font-size="9" font-weight="700" fill="#FFFFFF">2</text>
+
+      <!-- Hero Section -->
+      <rect x="0" y="56" width="{w}" height="280" fill="#F0F9FF"/>
+      <g transform="translate(180, 95)">
+        <rect x="0" y="0" width="170" height="22" rx="11" fill="#E0F2FE"/>
+        <text x="12" y="15" class="badge-tag" fill="#0369A1">AHORRA HASTA UN 40%</text>
+        <text x="0" y="55" class="hero-h1">Compara precios de medicamentos al instante</text>
+        <text x="0" y="80" class="hero-p">Encuentra disponibilidad y los mejores precios en más de 80 farmacias aliadas de Bogotá.</text>
+
+        <!-- Search Bar Large -->
+        <g transform="translate(0, 105)">
+          <rect x="0" y="0" width="840" height="54" rx="10" fill="#FFFFFF" stroke="#0284C7" stroke-width="2" filter="url(#shadow-card)"/>
+          <circle cx="28" cy="27" r="8" fill="none" stroke="#64748B" stroke-width="2"/>
+          <line x1="34" y1="33" x2="42" y2="41" stroke="#64748B" stroke-width="2" stroke-linecap="round"/>
+          <text x="52" y="32" font-size="14" fill="#1E293B">Acetaminofén 500mg tableta</text>
+          
+          <line x1="580" y1="12" x2="580" y2="42" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="600" y="32" font-size="12" fill="#64748B">Bogotá • Toda la ciudad ▾</text>
+
+          <rect x="730" y="8" width="98" height="38" rx="7" fill="#0284C7"/>
+          <text x="752" y="31" class="btn-text">Buscar</text>
+        </g>
+
+        <!-- Quick Tags -->
+        <g transform="translate(0, 175)">
+          <text x="0" y="14" font-size="12" font-weight="600" fill="#64748B">Populares:</text>
+          <rect x="75" y="0" width="90" height="24" rx="12" fill="#FFFFFF" stroke="#CBD5E1"/>
+          <text x="88" y="16" font-size="11" fill="#334155">Ibuprofeno</text>
+          
+          <rect x="175" y="0" width="85" height="24" rx="12" fill="#FFFFFF" stroke="#CBD5E1"/>
+          <text x="187" y="16" font-size="11" fill="#334155">Amoxicilina</text>
+          
+          <rect x="270" y="0" width="85" height="24" rx="12" fill="#FFFFFF" stroke="#CBD5E1"/>
+          <text x="282" y="16" font-size="11" fill="#334155">Loratadina</text>
+
+          <rect x="365" y="0" width="85" height="24" rx="12" fill="#FFFFFF" stroke="#CBD5E1"/>
+          <text x="378" y="16" font-size="11" fill="#334155">Losartán</text>
+
+          <rect x="460" y="0" width="95" height="24" rx="12" fill="#FFFFFF" stroke="#CBD5E1"/>
+          <text x="472" y="16" font-size="11" fill="#334155">Omeprazol</text>
+        </g>
+      </g>
+
+      <!-- Section: Categorias y Destacados -->
+      <g transform="translate(40, 360)">
+        <text x="0" y="18" font-size="16" font-weight="700" fill="#0F172A">Medicamentos Más Consultados</text>
+        <text x="1040" y="18" font-size="12" font-weight="600" fill="#0284C7">Ver catálogo completo →</text>
+        
+        <!-- Product Cards (3 Columns) -->
+        <g transform="translate(0, 35)">
+          <rect width="355" height="280" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+          <rect x="16" y="16" width="323" height="120" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+          <rect x="135" y="46" width="85" height="60" rx="4" fill="#E2E8F0"/>
+          <line x1="135" y1="46" x2="220" y2="106" stroke="#CBD5E1" stroke-width="1"/>
+          <line x1="220" y1="46" x2="135" y2="106" stroke="#CBD5E1" stroke-width="1"/>
+          <text x="145" y="80" font-size="10" fill="#64748B">IMAGEN [IMG]</text>
+
+          <rect x="24" y="24" width="70" height="20" rx="4" fill="#DCFCE7"/>
+          <text x="32" y="38" font-size="10" font-weight="700" fill="#15803D">EN STOCK</text>
+          
+          <text x="16" y="160" class="card-title">Acetaminofén 500mg x 100 tab</text>
+          <text x="16" y="178" class="card-sub">Laboratorio Genfar • Analgésico</text>
+          
+          <text x="16" y="210" font-size="11" fill="#64748B">Desde:</text>
+          <text x="16" y="232" class="price-main">$4.500 COP</text>
+          <text x="115" y="232" font-size="11" text-decoration="line-through" fill="#94A3B8">$7.200</text>
+          
+          <rect x="235" y="208" width="105" height="34" rx="6" fill="#0284C7"/>
+          <text x="248" y="229" class="btn-text">Comparar (7)</text>
+          <text x="16" y="260" font-size="10" fill="#059669">✓ Disponible en 7 farmacias cercanas</text>
+        </g>
+
+        <!-- Card 2 -->
+        <g transform="translate(382, 35)">
+          <rect width="355" height="280" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+          <rect x="16" y="16" width="323" height="120" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+          <rect x="135" y="46" width="85" height="60" rx="4" fill="#E2E8F0"/>
+          <line x1="135" y1="46" x2="220" y2="106" stroke="#CBD5E1" stroke-width="1"/>
+          <line x1="220" y1="46" x2="135" y2="106" stroke="#CBD5E1" stroke-width="1"/>
+          <text x="145" y="80" font-size="10" fill="#64748B">IMAGEN [IMG]</text>
+
+          <rect x="24" y="24" width="85" height="20" rx="4" fill="#FEF3C7"/>
+          <text x="32" y="38" font-size="10" font-weight="700" fill="#B45309">POPULAR</text>
+
+          <text x="16" y="160" class="card-title">Amoxicilina 500mg x 30 cap</text>
+          <text x="16" y="178" class="card-sub">Laboratorio MK • Antibiótico</text>
+
+          <text x="16" y="210" font-size="11" fill="#64748B">Desde:</text>
+          <text x="16" y="232" class="price-main">$14.800 COP</text>
+          <text x="120" y="232" font-size="11" text-decoration="line-through" fill="#94A3B8">$21.500</text>
+
+          <rect x="235" y="208" width="105" height="34" rx="6" fill="#0284C7"/>
+          <text x="248" y="229" class="btn-text">Comparar (5)</text>
+          <text x="16" y="260" font-size="10" fill="#059669">✓ Disponible en 5 farmacias cercanas</text>
+        </g>
+
+        <!-- Card 3 -->
+        <g transform="translate(765, 35)">
+          <rect width="355" height="280" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+          <rect x="16" y="16" width="323" height="120" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+          <rect x="135" y="46" width="85" height="60" rx="4" fill="#E2E8F0"/>
+          <line x1="135" y1="46" x2="220" y2="106" stroke="#CBD5E1" stroke-width="1"/>
+          <line x1="220" y1="46" x2="135" y2="106" stroke="#CBD5E1" stroke-width="1"/>
+          <text x="145" y="80" font-size="10" fill="#64748B">IMAGEN [IMG]</text>
+
+          <rect x="24" y="24" width="70" height="20" rx="4" fill="#DCFCE7"/>
+          <text x="32" y="38" font-size="10" font-weight="700" fill="#15803D">EN STOCK</text>
+
+          <text x="16" y="160" class="card-title">Ibuprofeno 800mg x 20 tab</text>
+          <text x="16" y="178" class="card-sub">Laboratorio Lafrancol • Antiinflamatorio</text>
+
+          <text x="16" y="210" font-size="11" fill="#64748B">Desde:</text>
+          <text x="16" y="232" class="price-main">$8.200 COP</text>
+          <text x="115" y="232" font-size="11" text-decoration="line-through" fill="#94A3B8">$12.000</text>
+
+          <rect x="235" y="208" width="105" height="34" rx="6" fill="#0284C7"/>
+          <text x="248" y="229" class="btn-text">Comparar (9)</text>
+          <text x="16" y="260" font-size="10" fill="#059669">✓ Disponible en 9 farmacias cercanas</text>
+        </g>
+      </g>
+
+      <!-- Floating AI Assistant Button Wireframe -->
+      <g transform="translate(1120, 660)">
+        <circle cx="28" cy="28" r="26" fill="#0284C7" filter="url(#shadow-frame)"/>
+        <text x="20" y="34" font-size="16" fill="#FFFFFF">💬</text>
+      </g>
+    </g>
+    '''
+    return chrome + body
+
+def get_screen_2(x=0, y=0):
+    w, h = 1200, 780
+    chrome = browser_chrome(x, y, w, h, "PANTALLA 2: Ficha de Producto y Comparador de Precios", "https://farmalink.com.co/medicamento/acetaminofen-500mg")
+    body = f'''
+    <g transform="translate({x}, {y+41})">
+      <rect x="0" y="0" width="{w}" height="50" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <rect x="24" y="13" width="24" height="24" rx="5" fill="#0284C7"/>
+      <text x="56" y="30" font-size="14" font-weight="700" fill="#0F172A">Farmalink</text>
+      <text x="160" y="30" font-size="12" fill="#64748B">Inicio &gt; Medicamentos &gt; Analgésicos &gt; <tspan fill="#0F172A" font-weight="600">Acetaminofén 500mg</tspan></text>
+      <rect x="1070" y="10" width="105" height="30" rx="5" fill="#F1F5F9" stroke="#CBD5E1"/>
+      <text x="1084" y="29" font-size="11" font-weight="600" fill="#334155">← Volver al buscador</text>
+
+      <!-- Main Product Header Box -->
+      <g transform="translate(30, 70)">
+        <rect width="1140" height="150" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+        
+        <rect x="20" y="15" width="160" height="120" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+        <line x1="20" y1="15" x2="180" y2="135" stroke="#E2E8F0" stroke-width="1"/>
+        <line x1="180" y1="15" x2="20" y2="135" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="65" y="80" font-size="11" fill="#94A3B8">[FOTO MED]</text>
+
+        <g transform="translate(205, 25)">
+          <rect x="0" y="0" width="90" height="20" rx="4" fill="#E0F2FE"/>
+          <text x="8" y="14" class="badge-tag" fill="#0369A1">ANALGÉSICO</text>
+          <text x="0" y="48" font-size="20" font-weight="800" fill="#0F172A">Acetaminofén 500mg (Caja x 100 Tabletas)</text>
+          <text x="0" y="70" font-size="12" fill="#64748B">Laboratorio: <tspan font-weight="600" fill="#1E293B">Laboratorios MK S.A.</tspan> • Registro INVIMA: <tspan font-weight="600" fill="#1E293B">2018M-000421-R3</tspan></text>
+          <text x="0" y="90" font-size="12" fill="#64748B">Principio Activo: <tspan font-weight="600" fill="#1E293B">Paracetamol (Acetaminofén) 500 mg</tspan></text>
+        </g>
+
+        <!-- Best Price Highlight Box -->
+        <g transform="translate(860, 20)">
+          <rect width="255" height="110" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.5"/>
+          <text x="20" y="26" font-size="11" font-weight="700" fill="#166534">MEJOR PRECIO ENCONTRADO</text>
+          <text x="20" y="58" font-size="24" font-weight="800" fill="#15803D">$4.800 COP</text>
+          <text x="20" y="78" font-size="11" fill="#166534">En: <tspan font-weight="700">Droguería San Jorge (Chapinero)</tspan></text>
+          <text x="20" y="96" font-size="11" font-weight="600" fill="#047857">Ahorro estimado: $3.400 vs precio máx.</text>
+        </g>
+      </g>
+
+      <!-- Filter bar / tabs -->
+      <g transform="translate(30, 240)">
+        <text x="0" y="22" font-size="15" font-weight="700" fill="#0F172A">Comparativa de Precios por Farmacia (4 Disponibles)</text>
+        <g transform="translate(680, 0)">
+          <rect x="0" y="0" width="120" height="32" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+          <text x="12" y="20" font-size="11" fill="#475569">Ordenar: Menor precio ▾</text>
+
+          <rect x="130" y="0" width="150" height="32" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+          <text x="142" y="20" font-size="11" fill="#475569">Distancia: &lt; 5 km ▾</text>
+
+          <rect x="290" y="0" width="170" height="32" rx="6" fill="#0284C7"/>
+          <text x="306" y="20" font-size="11" font-weight="600" fill="#FFFFFF">🗺️ Ver todas en Mapa</text>
+        </g>
+      </g>
+
+      <!-- Price Comparison Table -->
+      <g transform="translate(30, 285)">
+        <rect width="1140" height="420" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+        
+        <rect x="0" y="0" width="1140" height="42" fill="#F8FAFC" rx="8 8 0 0" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="30" y="26" class="table-th">Farmacia / Establecimiento</text>
+        <text x="340" y="26" class="table-th">Ubicación / Sector</text>
+        <text x="560" y="26" class="table-th">Distancia</text>
+        <text x="690" y="26" class="table-th">Disponibilidad</text>
+        <text x="840" y="26" class="table-th">Precio Unitario</text>
+        <text x="1000" y="26" class="table-th">Acción</text>
+
+        <!-- ROW 1 -->
+        <g transform="translate(0, 42)">
+          <rect width="1140" height="78" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+          <circle cx="45" cy="38" r="16" fill="#DCFCE7"/>
+          <text x="40" y="43" font-size="12" font-weight="700" fill="#15803D">1</text>
+          <text x="75" y="32" font-size="13" font-weight="700" fill="#0F172A">Droguería San Jorge</text>
+          <rect x="75" y="42" width="80" height="18" rx="4" fill="#16A34A"/>
+          <text x="82" y="55" font-size="9" font-weight="700" fill="#FFFFFF">MEJOR PRECIO</text>
+
+          <text x="340" y="36" class="table-td">Cra. 13 # 58-22, Chapinero</text>
+          <text x="340" y="52" font-size="11" fill="#64748B">Tel: (601) 345-8900</text>
+
+          <text x="560" y="44" class="table-td" font-weight="600">0.8 km</text>
+
+          <rect x="690" y="30" width="75" height="22" rx="4" fill="#DCFCE7"/>
+          <text x="700" y="45" font-size="10" font-weight="700" fill="#166534">En Stock</text>
+
+          <text x="840" y="44" font-size="16" font-weight="800" fill="#15803D">$4.800 COP</text>
+
+          <rect x="990" y="24" width="120" height="34" rx="6" fill="#15803D"/>
+          <text x="1006" y="45" class="btn-text">Ver en Mapa</text>
+        </g>
+
+        <!-- ROW 2 -->
+        <g transform="translate(0, 120)">
+          <rect width="1140" height="72" fill="#FFFFFF" stroke="#F1F5F9" stroke-width="1"/>
+          <circle cx="45" cy="36" r="16" fill="#F1F5F9"/>
+          <text x="40" y="41" font-size="12" font-weight="600" fill="#64748B">2</text>
+          <text x="75" y="32" font-size="13" font-weight="700" fill="#0F172A">Droguería La Rebaja</text>
+          <text x="75" y="50" font-size="11" fill="#64748B">Convenio institucional</text>
+
+          <text x="340" y="34" class="table-td">Cl. 72 # 11-40, Chapinero Norte</text>
+          <text x="340" y="50" font-size="11" fill="#64748B">Abierto 24 Horas</text>
+
+          <text x="560" y="42" class="table-td">1.4 km</text>
+
+          <rect x="690" y="28" width="75" height="22" rx="4" fill="#DCFCE7"/>
+          <text x="700" y="43" font-size="10" font-weight="700" fill="#166534">En Stock</text>
+
+          <text x="840" y="42" font-size="15" font-weight="700" fill="#0F172A">$5.200 COP</text>
+
+          <rect x="990" y="22" width="120" height="34" rx="6" fill="#0284C7"/>
+          <text x="1006" y="43" class="btn-text">Ver Oferta</text>
+        </g>
+
+        <!-- ROW 3 -->
+        <g transform="translate(0, 192)">
+          <rect width="1140" height="72" fill="#FFFFFF" stroke="#F1F5F9" stroke-width="1"/>
+          <circle cx="45" cy="36" r="16" fill="#F1F5F9"/>
+          <text x="40" y="41" font-size="12" font-weight="600" fill="#64748B">3</text>
+          <text x="75" y="32" font-size="13" font-weight="700" fill="#0F172A">Droguerías Cruz Verde</text>
+          <text x="75" y="50" font-size="11" fill="#64748B">Punto Calle 85</text>
+
+          <text x="340" y="34" class="table-td">Autopista Norte # 85-15</text>
+          <text x="340" y="50" font-size="11" fill="#64748B">Cierra 9:00 PM</text>
+
+          <text x="560" y="42" class="table-td">2.3 km</text>
+
+          <rect x="690" y="28" width="85" height="22" rx="4" fill="#FEF3C7"/>
+          <text x="698" y="43" font-size="10" font-weight="700" fill="#B45309">Stock Bajo</text>
+
+          <text x="840" y="42" font-size="15" font-weight="700" fill="#0F172A">$6.100 COP</text>
+
+          <rect x="990" y="22" width="120" height="34" rx="6" fill="#0284C7"/>
+          <text x="1006" y="43" class="btn-text">Ver Oferta</text>
+        </g>
+
+        <!-- ROW 4 -->
+        <g transform="translate(0, 264)">
+          <rect width="1140" height="72" fill="#FFFFFF" stroke="#F1F5F9" stroke-width="1"/>
+          <circle cx="45" cy="36" r="16" fill="#F1F5F9"/>
+          <text x="40" y="41" font-size="12" font-weight="600" fill="#64748B">4</text>
+          <text x="75" y="32" font-size="13" font-weight="700" fill="#0F172A">Farmatodo</text>
+          <text x="75" y="50" font-size="11" fill="#64748B">Sede Calle 100</text>
+
+          <text x="340" y="34" class="table-td">Av. Cra. 19 # 100-02</text>
+          <text x="340" y="50" font-size="11" fill="#64748B">Abierto 24 Horas</text>
+
+          <text x="560" y="42" class="table-td">4.1 km</text>
+
+          <rect x="690" y="28" width="75" height="22" rx="4" fill="#DCFCE7"/>
+          <text x="700" y="43" font-size="10" font-weight="700" fill="#166534">En Stock</text>
+
+          <text x="840" y="42" font-size="15" font-weight="700" fill="#0F172A">$8.200 COP</text>
+
+          <rect x="990" y="22" width="120" height="34" rx="6" fill="#0284C7"/>
+          <text x="1006" y="43" class="btn-text">Ver Oferta</text>
+        </g>
+
+        <!-- Table Footer / Pagination -->
+        <g transform="translate(30, 350)">
+          <text x="0" y="22" font-size="12" fill="#64748B">Mostrando 4 de 4 farmacias con disponibilidad confirmada en Bogotá</text>
+          <rect x="920" y="5" width="80" height="28" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+          <text x="935" y="23" font-size="11" fill="#64748B">Anterior</text>
+          <rect x="1010" y="5" width="80" height="28" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+          <text x="1025" y="23" font-size="11" fill="#64748B">Siguiente</text>
+        </g>
+      </g>
+    </g>
+    '''
+    return chrome + body
+
+def get_screen_3(x=0, y=0):
+    w, h = 1200, 780
+    chrome = browser_chrome(x, y, w, h, "PANTALLA 3: Mapa Geolocalizado de Farmacias", "https://farmalink.com.co/mapa?med=acetaminofen")
+    body = f'''
+    <g transform="translate({x}, {y+41})">
+      <rect x="0" y="0" width="{w}" height="50" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <rect x="24" y="13" width="24" height="24" rx="5" fill="#0284C7"/>
+      <text x="56" y="30" font-size="14" font-weight="700" fill="#0F172A">Farmalink</text>
+
+      <rect x="200" y="9" width="340" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+      <text x="215" y="29" font-size="11" fill="#1E293B">🔍 Acetaminofén 500mg</text>
+      
+      <rect x="560" y="9" width="220" height="32" rx="6" fill="#E0F2FE" stroke="#BAE6FD"/>
+      <text x="575" y="29" font-size="11" font-weight="600" fill="#0369A1">📍 Bogotá, Chapinero (GPS Activo)</text>
+
+      <rect x="1050" y="9" width="125" height="32" rx="6" fill="#F1F5F9" stroke="#CBD5E1"/>
+      <text x="1065" y="29" font-size="11" font-weight="600" fill="#334155">Filtros (3) ▾</text>
+
+      <!-- SPLIT VIEW -->
+      <g transform="translate(0, 50)">
+        <rect width="380" height="690" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="20" y="30" font-size="14" font-weight="700" fill="#0F172A">Farmacias en el área (5)</text>
+        <text x="20" y="48" font-size="11" fill="#64748B">Ordenadas por: <tspan font-weight="600" fill="#0284C7">Precio más bajo</tspan></text>
+
+        <!-- Pharmacy Card 1 (Active) -->
+        <g transform="translate(15, 65)">
+          <rect width="350" height="125" rx="8" fill="#F0F9FF" stroke="#0284C7" stroke-width="2"/>
+          <text x="15" y="24" font-size="13" font-weight="700" fill="#0F172A">Droguería San Jorge</text>
+          <rect x="255" y="10" width="80" height="20" rx="4" fill="#16A34A"/>
+          <text x="262" y="23" font-size="9" font-weight="700" fill="#FFFFFF">$4.800 COP</text>
+          
+          <text x="15" y="46" font-size="11" fill="#475569">Cra. 13 # 58-22 • A 800m</text>
+          <text x="15" y="64" font-size="11" fill="#059669">✓ Stock disponible para retiro</text>
+          <text x="15" y="82" font-size="11" fill="#64748B">Horario: 7:00 AM - 10:00 PM</text>
+          
+          <rect x="15" y="92" width="155" height="24" rx="4" fill="#0284C7"/>
+          <text x="35" y="108" font-size="10" font-weight="600" fill="#FFFFFF">Cómo llegar (Waze/Gmaps)</text>
+          <rect x="180" y="92" width="155" height="24" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+          <text x="220" y="108" font-size="10" font-weight="600" fill="#334155">Llamar</text>
+        </g>
+
+        <!-- Pharmacy Card 2 -->
+        <g transform="translate(15, 205)">
+          <rect width="350" height="115" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+          <text x="15" y="24" font-size="13" font-weight="700" fill="#0F172A">Droguería La Rebaja 72</text>
+          <rect x="255" y="10" width="80" height="20" rx="4" fill="#E2E8F0"/>
+          <text x="265" y="23" font-size="9" font-weight="700" fill="#1E293B">$5.200 COP</text>
+
+          <text x="15" y="46" font-size="11" fill="#475569">Cl. 72 # 11-40 • A 1.4 km</text>
+          <text x="15" y="64" font-size="11" fill="#059669">✓ Abierto 24 Horas</text>
+          <rect x="15" y="80" width="320" height="24" rx="4" fill="#F8FAFC" stroke="#CBD5E1"/>
+          <text x="120" y="96" font-size="10" font-weight="600" fill="#475569">Ver detalles en mapa</text>
+        </g>
+
+        <!-- Pharmacy Card 3 -->
+        <g transform="translate(15, 335)">
+          <rect width="350" height="115" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+          <text x="15" y="24" font-size="13" font-weight="700" fill="#0F172A">Cruz Verde Calle 85</text>
+          <rect x="255" y="10" width="80" height="20" rx="4" fill="#E2E8F0"/>
+          <text x="265" y="23" font-size="9" font-weight="700" fill="#1E293B">$6.100 COP</text>
+
+          <text x="15" y="46" font-size="11" fill="#475569">Autonorte # 85-15 • A 2.3 km</text>
+          <text x="15" y="64" font-size="11" fill="#B45309">⚠️ Stock limitado</text>
+          <rect x="15" y="80" width="320" height="24" rx="4" fill="#F8FAFC" stroke="#CBD5E1"/>
+          <text x="120" y="96" font-size="10" font-weight="600" fill="#475569">Ver detalles en mapa</text>
+        </g>
+      </g>
+
+      <!-- Right Panel: Interactive Map Simulation -->
+      <g transform="translate(380, 50)">
+        <rect width="820" height="690" fill="#E2E8F0"/>
+        
+        <path d="M 0 140 L 820 180" stroke="#CBD5E1" stroke-width="18"/>
+        <path d="M 0 380 L 820 420" stroke="#CBD5E1" stroke-width="26"/>
+        <path d="M 0 560 L 820 530" stroke="#CBD5E1" stroke-width="14"/>
+
+        <path d="M 220 0 L 260 690" stroke="#CBD5E1" stroke-width="22"/>
+        <path d="M 490 0 L 470 690" stroke="#CBD5E1" stroke-width="28"/>
+        <path d="M 680 0 L 710 690" stroke="#CBD5E1" stroke-width="16"/>
+
+        <text x="280" y="370" font-size="10" fill="#94A3B8" transform="rotate(3 280 370)">AVENIDA CARACAS / CRA 14</text>
+        <text x="495" y="120" font-size="10" fill="#94A3B8" transform="rotate(88 495 120)">CALLE 72</text>
+        <text x="730" y="320" font-size="10" fill="#94A3B8" transform="rotate(85 730 320)">CARRERA 7</text>
+
+        <rect x="520" y="160" width="140" height="180" rx="8" fill="#DCFCE7" opacity="0.6"/>
+        <text x="545" y="250" font-size="11" fill="#15803D" font-weight="600">Parque El Virrey</text>
+
+        <!-- User Location -->
+        <circle cx="340" cy="320" r="24" fill="#0284C7" opacity="0.2"/>
+        <circle cx="340" cy="320" r="10" fill="#0284C7"/>
+        <circle cx="340" cy="320" r="4" fill="#FFFFFF"/>
+        <text x="355" y="325" font-size="10" font-weight="700" fill="#0284C7">TÚ ESTÁS AQUÍ</text>
+
+        <!-- Pin 1 -->
+        <g transform="translate(230, 230)">
+          <circle cx="20" cy="20" r="26" fill="#10B981" opacity="0.25"/>
+          <path d="M 20 5 C 10 5 5 13 5 20 C 5 28 20 45 20 45 C 20 45 35 28 35 20 C 35 13 30 5 20 5 Z" fill="#16A34A"/>
+          <circle cx="20" cy="18" r="6" fill="#FFFFFF"/>
+          
+          <rect x="-25" y="-22" width="90" height="24" rx="12" fill="#15803D" filter="url(#shadow-card)"/>
+          <text x="-15" y="-6" font-size="11" font-weight="700" fill="#FFFFFF">⭐ $4.800</text>
+
+          <g transform="translate(45, -50)">
+            <rect width="210" height="95" rx="6" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5" filter="url(#shadow-frame)"/>
+            <text x="12" y="20" font-size="11" font-weight="700" fill="#0F172A">Droguería San Jorge</text>
+            <text x="12" y="36" font-size="10" fill="#16A34A" font-weight="700">Mejor Precio: $4.800 COP</text>
+            <text x="12" y="52" font-size="9" fill="#64748B">Distancia: 800 metros</text>
+            <rect x="12" y="62" width="186" height="22" rx="4" fill="#0284C7"/>
+            <text x="65" y="77" font-size="10" font-weight="600" fill="#FFFFFF">Ver Detalles</text>
+          </g>
+        </g>
+
+        <!-- Pin 2 -->
+        <g transform="translate(480, 280)">
+          <path d="M 20 5 C 10 5 5 13 5 20 C 5 28 20 45 20 45 C 20 45 35 28 35 20 C 35 13 30 5 20 5 Z" fill="#0284C7"/>
+          <circle cx="20" cy="18" r="6" fill="#FFFFFF"/>
+          <rect x="-15" y="-18" width="70" height="20" rx="10" fill="#0369A1"/>
+          <text x="-5" y="-4" font-size="10" font-weight="700" fill="#FFFFFF">$5.200</text>
+        </g>
+
+        <!-- Pin 3 -->
+        <g transform="translate(680, 140)">
+          <path d="M 20 5 C 10 5 5 13 5 20 C 5 28 20 45 20 45 C 20 45 35 28 35 20 C 35 13 30 5 20 5 Z" fill="#64748B"/>
+          <circle cx="20" cy="18" r="6" fill="#FFFFFF"/>
+          <rect x="-15" y="-18" width="70" height="20" rx="10" fill="#475569"/>
+          <text x="-5" y="-4" font-size="10" font-weight="700" fill="#FFFFFF">$6.100</text>
+        </g>
+
+        <!-- Map Controls -->
+        <g transform="translate(760, 20)">
+          <rect width="36" height="74" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" filter="url(#shadow-card)"/>
+          <text x="12" y="26" font-size="18" font-weight="700" fill="#475569">+</text>
+          <line x1="6" y1="37" x2="30" y2="37" stroke="#E2E8F0"/>
+          <text x="14" y="58" font-size="20" font-weight="700" fill="#475569">-</text>
+        </g>
+      </g>
+    </g>
+    '''
+    return chrome + body
+
+def get_screen_4(x=0, y=0):
+    w, h = 1200, 780
+    chrome = browser_chrome(x, y, w, h, "PANTALLA 4: Dashboard Gestión de Precios & Catálogo (Admin)", "https://farmalink.com.co/admin/medicamentos")
+    body = f'''
+    <g transform="translate({x}, {y+41})">
+      <rect x="0" y="0" width="220" height="740" fill="#0F172A"/>
+      
+      <g transform="translate(20, 20)">
+        <rect width="28" height="28" rx="6" fill="#0284C7"/>
+        <text x="36" y="20" font-size="15" font-weight="700" fill="#FFFFFF">Farmalink<tspan fill="#38BDF8">Admin</tspan></text>
+      </g>
+
+      <g transform="translate(15, 80)">
+        <rect x="0" y="0" width="190" height="38" rx="6" fill="#1E293B"/>
+        <text x="36" y="24" font-size="12" font-weight="600" fill="#FFFFFF">📊 Dashboard General</text>
+        
+        <rect x="0" y="48" width="190" height="38" rx="6" fill="#0284C7"/>
+        <text x="36" y="72" font-size="12" font-weight="700" fill="#FFFFFF">💊 Medicamentos</text>
+
+        <rect x="0" y="96" width="190" height="38" rx="6" fill="transparent"/>
+        <text x="36" y="120" font-size="12" font-weight="500" fill="#94A3B8">🏷️ Actualizar Precios</text>
+
+        <rect x="0" y="144" width="190" height="38" rx="6" fill="transparent"/>
+        <text x="36" y="168" font-size="12" font-weight="500" fill="#94A3B8">🏪 Sucursales &amp; Sedes</text>
+
+        <rect x="0" y="192" width="190" height="38" rx="6" fill="transparent"/>
+        <text x="36" y="216" font-size="12" font-weight="500" fill="#94A3B8">📈 Estadísticas de Búsqueda</text>
+
+        <rect x="0" y="240" width="190" height="38" rx="6" fill="transparent"/>
+        <text x="36" y="264" font-size="12" font-weight="500" fill="#94A3B8">⚙️ Configuración</text>
+      </g>
+
+      <g transform="translate(20, 660)">
+        <circle cx="18" cy="18" r="16" fill="#334155"/>
+        <text x="13" y="23" font-size="12" fill="#FFFFFF">👨‍⚕️</text>
+        <text x="44" y="16" font-size="11" font-weight="600" fill="#FFFFFF">Drog. San Jorge</text>
+        <text x="44" y="30" font-size="10" fill="#94A3B8">Rol: Farmacéutico</text>
+      </g>
+
+      <!-- MAIN CONTENT AREA -->
+      <g transform="translate(220, 0)">
+        <rect width="980" height="56" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="30" y="34" font-size="16" font-weight="700" fill="#0F172A">Gestión de Catálogo e Inventario de Precios</text>
+        
+        <rect x="680" y="12" width="180" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+        <text x="696" y="32" font-size="11" fill="#64748B">Buscar medicamento...</text>
+        
+        <circle cx="890" cy="28" r="14" fill="#F1F5F9"/>
+        <text x="885" y="32" font-size="11">🔔</text>
+
+        <!-- KPI Stat Cards -->
+        <g transform="translate(30, 75)">
+          <g transform="translate(0, 0)">
+            <rect width="215" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+            <text x="16" y="26" font-size="11" font-weight="600" fill="#64748B">MEDICAMENTOS ACTIVOS</text>
+            <text x="16" y="58" font-size="22" font-weight="800" fill="#0F172A">142</text>
+            <text x="16" y="76" font-size="10" font-weight="600" fill="#16A34A">↑ +8 este mes</text>
+          </g>
+
+          <g transform="translate(235, 0)">
+            <rect width="215" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+            <text x="16" y="26" font-size="11" font-weight="600" fill="#64748B">PRECIOS ACTUALIZADOS</text>
+            <text x="16" y="58" font-size="22" font-weight="800" fill="#0284C7">98%</text>
+            <text x="16" y="76" font-size="10" font-weight="600" fill="#16A34A">✓ Al día hoy</text>
+          </g>
+
+          <g transform="translate(470, 0)">
+            <rect width="215" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+            <text x="16" y="26" font-size="11" font-weight="600" fill="#64748B">CLICS / CONSULTAS HOY</text>
+            <text x="16" y="58" font-size="22" font-weight="800" fill="#0F172A">1.840</text>
+            <text x="16" y="76" font-size="10" font-weight="600" fill="#16A34A">↑ +14% vs ayer</text>
+          </g>
+
+          <g transform="translate(705, 0)">
+            <rect width="215" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+            <text x="16" y="26" font-size="11" font-weight="600" fill="#64748B">OFERTA COMPETITIVA</text>
+            <text x="16" y="58" font-size="22" font-weight="800" fill="#16A34A">34 Ítems</text>
+            <text x="16" y="76" font-size="10" font-weight="600" fill="#16A34A">Mejor precio de la zona</text>
+          </g>
+        </g>
+
+        <!-- Actions Bar -->
+        <g transform="translate(30, 185)">
+          <text x="0" y="24" font-size="14" font-weight="700" fill="#0F172A">Listado de Medicamentos Registrados</text>
+          <rect x="735" y="2" width="185" height="34" rx="6" fill="#0284C7"/>
+          <text x="753" y="23" class="btn-text">+ Registrar Medicamento</text>
+        </g>
+
+        <!-- Data Table -->
+        <g transform="translate(30, 230)">
+          <rect width="920" height="470" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+          
+          <rect width="920" height="40" fill="#F8FAFC" rx="8 8 0 0" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="25" y="25" class="table-th">Medicamento &amp; Presentación</text>
+          <text x="280" y="25" class="table-th">Laboratorio</text>
+          <text x="440" y="25" class="table-th">Categoría</text>
+          <text x="560" y="25" class="table-th">Precio Actual</text>
+          <text x="680" y="25" class="table-th">Estado</text>
+          <text x="800" y="25" class="table-th">Acciones</text>
+
+          <!-- Table Row 1 -->
+          <g transform="translate(0, 40)">
+            <rect width="920" height="60" fill="#FFFFFF" stroke="#F1F5F9"/>
+            <text x="25" y="28" font-size="12" font-weight="700" fill="#0F172A">Acetaminofén 500mg</text>
+            <text x="25" y="44" font-size="10" fill="#64748B">Caja x 100 tab • INVIMA 2018M</text>
+
+            <text x="280" y="35" class="table-td">Genfar S.A.</text>
+            <text x="440" y="35" class="table-td">Analgésicos</text>
+            <text x="560" y="35" font-size="13" font-weight="700" fill="#15803D">$4.800 COP</text>
+            
+            <rect x="680" y="22" width="65" height="20" rx="4" fill="#DCFCE7"/>
+            <text x="692" y="36" font-size="10" font-weight="700" fill="#166534">Activo</text>
+
+            <rect x="795" y="20" width="50" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+            <text x="808" y="36" font-size="10" fill="#334155">Editar</text>
+            <rect x="855" y="20" width="50" height="24" rx="4" fill="#FEE2E2" stroke="#FCA5A5"/>
+            <text x="866" y="36" font-size="10" fill="#DC2626">Borrar</text>
+          </g>
+
+          <!-- Table Row 2 -->
+          <g transform="translate(0, 100)">
+            <rect width="920" height="60" fill="#FFFFFF" stroke="#F1F5F9"/>
+            <text x="25" y="28" font-size="12" font-weight="700" fill="#0F172A">Amoxicilina 500mg</text>
+            <text x="25" y="44" font-size="10" fill="#64748B">Caja x 30 cap • INVIMA 2019M</text>
+
+            <text x="280" y="35" class="table-td">Laboratorios MK</text>
+            <text x="440" y="35" class="table-td">Antibióticos</text>
+            <text x="560" y="35" font-size="13" font-weight="700" fill="#0F172A">$15.200 COP</text>
+
+            <rect x="680" y="22" width="65" height="20" rx="4" fill="#DCFCE7"/>
+            <text x="692" y="36" font-size="10" font-weight="700" fill="#166534">Activo</text>
+
+            <rect x="795" y="20" width="50" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+            <text x="808" y="36" font-size="10" fill="#334155">Editar</text>
+            <rect x="855" y="20" width="50" height="24" rx="4" fill="#FEE2E2" stroke="#FCA5A5"/>
+            <text x="866" y="36" font-size="10" fill="#DC2626">Borrar</text>
+          </g>
+
+          <!-- Table Row 3 -->
+          <g transform="translate(0, 160)">
+            <rect width="920" height="60" fill="#FFFFFF" stroke="#F1F5F9"/>
+            <text x="25" y="28" font-size="12" font-weight="700" fill="#0F172A">Ibuprofeno 800mg</text>
+            <text x="25" y="44" font-size="10" fill="#64748B">Caja x 20 tab • INVIMA 2017M</text>
+
+            <text x="280" y="35" class="table-td">Lafrancol</text>
+            <text x="440" y="35" class="table-td">Antiinflamatorios</text>
+            <text x="560" y="35" font-size="13" font-weight="700" fill="#0F172A">$8.400 COP</text>
+
+            <rect x="680" y="22" width="65" height="20" rx="4" fill="#DCFCE7"/>
+            <text x="692" y="36" font-size="10" font-weight="700" fill="#166534">Activo</text>
+
+            <rect x="795" y="20" width="50" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+            <text x="808" y="36" font-size="10" fill="#334155">Editar</text>
+            <rect x="855" y="20" width="50" height="24" rx="4" fill="#FEE2E2" stroke="#FCA5A5"/>
+            <text x="866" y="36" font-size="10" fill="#DC2626">Borrar</text>
+          </g>
+
+          <!-- Table Row 4 -->
+          <g transform="translate(0, 220)">
+            <rect width="920" height="60" fill="#FFFFFF" stroke="#F1F5F9"/>
+            <text x="25" y="28" font-size="12" font-weight="700" fill="#0F172A">Loratadina 10mg</text>
+            <text x="25" y="44" font-size="10" fill="#64748B">Caja x 10 tab • INVIMA 2020M</text>
+
+            <text x="280" y="35" class="table-td">Tecnoquímicas</text>
+            <text x="440" y="35" class="table-td">Antialérgicos</text>
+            <text x="560" y="35" font-size="13" font-weight="700" fill="#B45309">$5.900 COP</text>
+
+            <rect x="680" y="22" width="65" height="20" rx="4" fill="#FEF3C7"/>
+            <text x="688" y="36" font-size="10" font-weight="700" fill="#B45309">Bajo Stock</text>
+
+            <rect x="795" y="20" width="50" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+            <text x="808" y="36" font-size="10" fill="#334155">Editar</text>
+            <rect x="855" y="20" width="50" height="24" rx="4" fill="#FEE2E2" stroke="#FCA5A5"/>
+            <text x="866" y="36" font-size="10" fill="#DC2626">Borrar</text>
+          </g>
+
+          <!-- Table Row 5 -->
+          <g transform="translate(0, 280)">
+            <rect width="920" height="60" fill="#FFFFFF" stroke="#F1F5F9"/>
+            <text x="25" y="28" font-size="12" font-weight="700" fill="#0F172A">Losartán Potásico 50mg</text>
+            <text x="25" y="44" font-size="10" fill="#64748B">Caja x 30 tab • INVIMA 2016M</text>
+
+            <text x="280" y="35" class="table-td">La Sante</text>
+            <text x="440" y="35" class="table-td">Cardiovascular</text>
+            <text x="560" y="35" font-size="13" font-weight="700" fill="#0F172A">$9.500 COP</text>
+
+            <rect x="680" y="22" width="65" height="20" rx="4" fill="#DCFCE7"/>
+            <text x="692" y="36" font-size="10" font-weight="700" fill="#166534">Activo</text>
+
+            <rect x="795" y="20" width="50" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+            <text x="808" y="36" font-size="10" fill="#334155">Editar</text>
+            <rect x="855" y="20" width="50" height="24" rx="4" fill="#FEE2E2" stroke="#FCA5A5"/>
+            <text x="866" y="36" font-size="10" fill="#DC2626">Borrar</text>
+          </g>
+          
+          <!-- Pagination -->
+          <g transform="translate(25, 410)">
+            <text x="0" y="25" font-size="11" fill="#64748B">Mostrando 1 a 5 de 142 registros</text>
+            <rect x="700" y="8" width="90" height="28" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+            <text x="718" y="26" font-size="11" fill="#475569">Anterior</text>
+            <rect x="805" y="8" width="90" height="28" rx="4" fill="#0284C7"/>
+            <text x="822" y="26" class="btn-text">Siguiente</text>
+          </g>
+        </g>
+      </g>
+    </g>
+    '''
+    return chrome + body
+
+def wrap_single_screen(body_fn, title):
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 840" width="1240" height="840">
+{COMMON_DEFS}
+  <rect width="1240" height="840" fill="#F8FAFC"/>
+  <g transform="translate(20, 30)">
+{body_fn(0, 0)}
+  </g>
+</svg>'''
+
+def generate_master():
+    s1 = get_screen_1(60, 160)
+    s2 = get_screen_2(1340, 160)
+    s3 = get_screen_3(60, 990)
+    s4 = get_screen_4(1340, 990)
+
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2600 1860" width="2600" height="1860">
+{COMMON_DEFS}
+  <!-- Background Canvas -->
+  <rect width="2600" height="1860" fill="#F8FAFC"/>
+
+  <!-- Canvas Header -->
+  <g transform="translate(60, 45)">
+    <rect x="0" y="-12" width="160" height="26" rx="6" fill="#E0F2FE"/>
+    <text x="10" y="5" class="badge-tag" fill="#0284C7">FARMALINK S.A.S. • WIREFRAMES</text>
+    <text x="0" y="42" class="title-canvas">Arquitectura de Interfaz &amp; Flujos Principales (Low-Mid Fidelity)</text>
+    <text x="0" y="66" class="subtitle-canvas">Ecosistema web responsivo para consulta, comparativa de precios y geolocalización de medicamentos en farmacias de Bogotá.</text>
+  </g>
+
+{s1}
+{s2}
+{s3}
+{s4}
+</svg>'''
+
+if __name__ == '__main__':
+    out_dir = 'wireframes_figma'
+    os.makedirs(out_dir, exist_ok=True)
+
+    # 1. Master Board
+    with open(os.path.join(out_dir, '00_farmalink_master_wireframe.svg'), 'w', encoding='utf-8') as f:
+        f.write(generate_master())
+    
+    # 2. Individual screens
+    with open(os.path.join(out_dir, '01_home_buscador.svg'), 'w', encoding='utf-8') as f:
+        f.write(wrap_single_screen(get_screen_1, "Home & Buscador"))
+
+    with open(os.path.join(out_dir, '02_detalle_comparador.svg'), 'w', encoding='utf-8') as f:
+        f.write(wrap_single_screen(get_screen_2, "Detalle & Comparador"))
+
+    with open(os.path.join(out_dir, '03_mapa_farmacias.svg'), 'w', encoding='utf-8') as f:
+        f.write(wrap_single_screen(get_screen_3, "Mapa de Farmacias"))
+
+    with open(os.path.join(out_dir, '04_dashboard_admin.svg'), 'w', encoding='utf-8') as f:
+        f.write(wrap_single_screen(get_screen_4, "Dashboard Admin"))
+
+    print("Generated all SVGs in wireframes_figma/ successfully!")

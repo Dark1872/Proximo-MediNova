@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 840" width="1240" height="840">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+      text { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      .title-canvas { font-size: 28px; font-weight: 700; fill: #0F172A; }
+      .subtitle-canvas { font-size: 15px; font-weight: 400; fill: #64748B; }
+      .badge-tag { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+      .screen-title { font-size: 18px; font-weight: 700; fill: #1E293B; }
+      .browser-url { font-size: 12px; fill: #64748B; }
+      .nav-link { font-size: 13px; font-weight: 500; fill: #475569; }
+      .hero-h1 { font-size: 26px; font-weight: 800; fill: #0F172A; }
+      .hero-p { font-size: 13px; fill: #64748B; line-height: 1.4; }
+      .card-title { font-size: 14px; font-weight: 600; fill: #0F172A; }
+      .card-sub { font-size: 11px; fill: #64748B; }
+      .price-main { font-size: 16px; font-weight: 700; fill: #0284C7; }
+      .btn-text { font-size: 12px; font-weight: 600; fill: #FFFFFF; }
+      .table-th { font-size: 11px; font-weight: 600; fill: #475569; text-transform: uppercase; }
+      .table-td { font-size: 12px; fill: #1E293B; }
+    </style>
+    <filter id="shadow-frame" x="-2%" y="-1%" width="104%" height="103%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    <filter id="shadow-card" x="-3%" y="-3%" width="106%" height="108%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.05"/>
+    </filter>
+  </defs>
+  <rect width="1240" height="840" fill="#F8FAFC"/>
+  <g transform="translate(20, 30)">
+
+    <!-- Window Frame -->
+    <rect x="0" y="0" width="1200" height="780" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-frame)"/>
+    <!-- Window Top Header -->
+    <path d="M 0 12 Q 0 0 12 0 L 1188 0 Q 1200 0 1200 12 L 1200 40 L 0 40 Z" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+    <!-- Window Controls -->
+    <circle cx="20" cy="20" r="5" fill="#EF4444"/>
+    <circle cx="36" cy="20" r="5" fill="#F59E0B"/>
+    <circle cx="52" cy="20" r="5" fill="#10B981"/>
+    <!-- Browser URL Bar -->
+    <rect x="100" y="8" width="920" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="112" y="24" class="browser-url">https://farmalink.com.co/medicamento/acetaminofen-500mg</text>
+    <!-- Frame Title Tag -->
+    <text x="0" y="-16" class="screen-title">PANTALLA 2: Ficha de Producto y Comparador de Precios</text>
+    
+    <g transform="translate(0, 41)">
+      <rect x="0" y="0" width="1200" height="50" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <rect x="24" y="13" width="24" height="24" rx="5" fill="#0284C7"/>
+      <text x="56" y="30" font-size="14" font-weight="700" fill="#0F172A">Farmalink</text>
+      <text x="160" y="30" font-size="12" fill="#64748B">Inicio &gt; Medicamentos &gt; Analgésicos &gt; <tspan fill="#0F172A" font-weight="600">Acetaminofén 500mg</tspan></text>
+      <rect x="1070" y="10" width="105" height="30" rx="5" fill="#F1F5F9" stroke="#CBD5E1"/>
+      <text x="1084" y="29" font-size="11" font-weight="600" fill="#334155">← Volver al buscador</text>
+
+      <!-- Main Product Header Box -->
+      <g transform="translate(30, 70)">
+        <rect width="1140" height="150" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+        
+        <rect x="20" y="15" width="160" height="120" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+        <line x1="20" y1="15" x2="180" y2="135" stroke="#E2E8F0" stroke-width="1"/>
+        <line x1="180" y1="15" x2="20" y2="135" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="65" y="80" font-size="11" fill="#94A3B8">[FOTO MED]</text>
+
+        <g transform="translate(205, 25)">
+          <rect x="0" y="0" width="90" height="20" rx="4" fill="#E0F2FE"/>
+          <text x="8" y="14" class="badge-tag" fill="#0369A1">ANALGÉSICO</text>
+          <text x="0" y="48" font-size="20" font-weight="800" fill="#0F172A">Acetaminofén 500mg (Caja x 100 Tabletas)</text>
+          <text x="0" y="70" font-size="12" fill="#64748B">Laboratorio: <tspan font-weight="600" fill="#1E293B">Laboratorios MK S.A.</tspan> • Registro INVIMA: <tspan font-weight="600" fill="#1E293B">2018M-000421-R3</tspan></text>
+          <text x="0" y="90" font-size="12" fill="#64748B">Principio Activo: <tspan font-weight="600" fill="#1E293B">Paracetamol (Acetaminofén) 500 mg</tspan></text>
+        </g>
+
+        <!-- Best Price Highlight Box -->
+        <g transform="translate(860, 20)">
+          <rect width="255" height="110" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.5"/>
+          <text x="20" y="26" font-size="11" font-weight="700" fill="#166534">MEJOR PRECIO ENCONTRADO</text>
+          <text x="20" y="58" font-size="24" font-weight="800" fill="#15803D">$4.800 COP</text>
+          <text x="20" y="78" font-size="11" fill="#166534">En: <tspan font-weight="700">Droguería San Jorge (Chapinero)</tspan></text>
+          <text x="20" y="96" font-size="11" font-weight="600" fill="#047857">Ahorro estimado: $3.400 vs precio máx.</text>
+        </g>
+      </g>
+
+      <!-- Filter bar / tabs -->
+      <g transform="translate(30, 240)">
+        <text x="0" y="22" font-size="15" font-weight="700" fill="#0F172A">Comparativa de Precios por Farmacia (4 Disponibles)</text>
+        <g transform="translate(680, 0)">
+          <rect x="0" y="0" width="120" height="32" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+          <text x="12" y="20" font-size="11" fill="#475569">Ordenar: Menor precio ▾</text>
+
+          <rect x="130" y="0" width="150" height="32" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+          <text x="142" y="20" font-size="11" fill="#475569">Distancia: &lt; 5 km ▾</text>
+
+          <rect x="290" y="0" width="170" height="32" rx="6" fill="#0284C7"/>
+          <text x="306" y="20" font-size="11" font-weight="600" fill="#FFFFFF">🗺️ Ver todas en Mapa</text>
+        </g>
+      </g>
+
+      <!-- Price Comparison Table -->
+      <g transform="translate(30, 285)">
+        <rect width="1140" height="420" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+        
+        <rect x="0" y="0" width="1140" height="42" fill="#F8FAFC" rx="8 8 0 0" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="30" y="26" class="table-th">Farmacia / Establecimiento</text>
+        <text x="340" y="26" class="table-th">Ubicación / Sector</text>
+        <text x="560" y="26" class="table-th">Distancia</text>
+        <text x="690" y="26" class="table-th">Disponibilidad</text>
+        <text x="840" y="26" class="table-th">Precio Unitario</text>
+        <text x="1000" y="26" class="table-th">Acción</text>
+
+        <!-- ROW 1 -->
+        <g transform="translate(0, 42)">
+          <rect width="1140" height="78" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+          <circle cx="45" cy="38" r="16" fill="#DCFCE7"/>
+          <text x="40" y="43" font-size="12" font-weight="700" fill="#15803D">1</text>
+          <text x="75" y="32" font-size="13" font-weight="700" fill="#0F172A">Droguería San Jorge</text>
+          <rect x="75" y="42" width="80" height="18" rx="4" fill="#16A34A"/>
+          <text x="82" y="55" font-size="9" font-weight="700" fill="#FFFFFF">MEJOR PRECIO</text>
+
+          <text x="340" y="36" class="table-td">Cra. 13 # 58-22, Chapinero</text>
+          <text x="340" y="52" font-size="11" fill="#64748B">Tel: (601) 345-8900</text>
+
+          <text x="560" y="44" class="table-td" font-weight="600">0.8 km</text>
+
+          <rect x="690" y="30" width="75" height="22" rx="4" fill="#DCFCE7"/>
+          <text x="700" y="45" font-size="10" font-weight="700" fill="#166534">En Stock</text>
+
+          <text x="840" y="44" font-size="16" font-weight="800" fill="#15803D">$4.800 COP</text>
+
+          <rect x="990" y="24" width="120" height="34" rx="6" fill="#15803D"/>
+          <text x="1006" y="45" class="btn-text">Ver en Mapa</text>
+        </g>
+
+        <!-- ROW 2 -->
+        <g transform="translate(0, 120)">
+          <rect width="1140" height="72" fill="#FFFFFF" stroke="#F1F5F9" stroke-width="1"/>
+          <circle cx="45" cy="36" r="16" fill="#F1F5F9"/>
+          <text x="40" y="41" font-size="12" font-weight="600" fill="#64748B">2</text>
+          <text x="75" y="32" font-size="13" font-weight="700" fill="#0F172A">Droguería La Rebaja</text>
+          <text x="75" y="50" font-size="11" fill="#64748B">Convenio institucional</text>
+
+          <text x="340" y="34" class="table-td">Cl. 72 # 11-40, Chapinero Norte</text>
+          <text x="340" y="50" font-size="11" fill="#64748B">Abierto 24 Horas</text>
+
+          <text x="560" y="42" class="table-td">1.4 km</text>
+
+          <rect x="690" y="28" width="75" height="22" rx="4" fill="#DCFCE7"/>
+          <text x="700" y="43" font-size="10" font-weight="700" fill="#166534">En Stock</text>
+
+          <text x="840" y="42" font-size="15" font-weight="700" fill="#0F172A">$5.200 COP</text>
+
+          <rect x="990" y="22" width="120" height="34" rx="6" fill="#0284C7"/>
+          <text x="1006" y="43" class="btn-text">Ver Oferta</text>
+        </g>
+
+        <!-- ROW 3 -->
+        <g transform="translate(0, 192)">
+          <rect width="1140" height="72" fill="#FFFFFF" stroke="#F1F5F9" stroke-width="1"/>
+          <circle cx="45" cy="36" r="16" fill="#F1F5F9"/>
+          <text x="40" y="41" font-size="12" font-weight="600" fill="#64748B">3</text>
+          <text x="75" y="32" font-size="13" font-weight="700" fill="#0F172A">Droguerías Cruz Verde</text>
+          <text x="75" y="50" font-size="11" fill="#64748B">Punto Calle 85</text>
+
+          <text x="340" y="34" class="table-td">Autopista Norte # 85-15</text>
+          <text x="340" y="50" font-size="11" fill="#64748B">Cierra 9:00 PM</text>
+
+          <text x="560" y="42" class="table-td">2.3 km</text>
+
+          <rect x="690" y="28" width="85" height="22" rx="4" fill="#FEF3C7"/>
+          <text x="698" y="43" font-size="10" font-weight="700" fill="#B45309">Stock Bajo</text>
+
+          <text x="840" y="42" font-size="15" font-weight="700" fill="#0F172A">$6.100 COP</text>
+
+          <rect x="990" y="22" width="120" height="34" rx="6" fill="#0284C7"/>
+          <text x="1006" y="43" class="btn-text">Ver Oferta</text>
+        </g>
+
+        <!-- ROW 4 -->
+        <g transform="translate(0, 264)">
+          <rect width="1140" height="72" fill="#FFFFFF" stroke="#F1F5F9" stroke-width="1"/>
+          <circle cx="45" cy="36" r="16" fill="#F1F5F9"/>
+          <text x="40" y="41" font-size="12" font-weight="600" fill="#64748B">4</text>
+          <text x="75" y="32" font-size="13" font-weight="700" fill="#0F172A">Farmatodo</text>
+          <text x="75" y="50" font-size="11" fill="#64748B">Sede Calle 100</text>
+
+          <text x="340" y="34" class="table-td">Av. Cra. 19 # 100-02</text>
+          <text x="340" y="50" font-size="11" fill="#64748B">Abierto 24 Horas</text>
+
+          <text x="560" y="42" class="table-td">4.1 km</text>
+
+          <rect x="690" y="28" width="75" height="22" rx="4" fill="#DCFCE7"/>
+          <text x="700" y="43" font-size="10" font-weight="700" fill="#166534">En Stock</text>
+
+          <text x="840" y="42" font-size="15" font-weight="700" fill="#0F172A">$8.200 COP</text>
+
+          <rect x="990" y="22" width="120" height="34" rx="6" fill="#0284C7"/>
+          <text x="1006" y="43" class="btn-text">Ver Oferta</text>
+        </g>
+
+        <!-- Table Footer / Pagination -->
+        <g transform="translate(30, 350)">
+          <text x="0" y="22" font-size="12" fill="#64748B">Mostrando 4 de 4 farmacias con disponibilidad confirmada en Bogotá</text>
+          <rect x="920" y="5" width="80" height="28" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+          <text x="935" y="23" font-size="11" fill="#64748B">Anterior</text>
+          <rect x="1010" y="5" width="80" height="28" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+          <text x="1025" y="23" font-size="11" fill="#64748B">Siguiente</text>
+        </g>
+      </g>
+    </g>
+    
+  </g>
+</svg>

@@ -408,7 +408,8 @@
   padding: 0.5rem;
   z-index: 1050;
   border: 1px solid rgba(0,0,0,0.06);
-  animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
 }
 
 .nav-dropdown::before {
@@ -425,8 +426,14 @@
 }
 
 @keyframes dropdownFadeIn {
-  from { opacity: 0; transform: translate(-50%, -10px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
 
 .nav-dropdown-header {

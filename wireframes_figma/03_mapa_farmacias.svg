@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 840" width="1240" height="840">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+      text { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      .title-canvas { font-size: 28px; font-weight: 700; fill: #0F172A; }
+      .subtitle-canvas { font-size: 15px; font-weight: 400; fill: #64748B; }
+      .badge-tag { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+      .screen-title { font-size: 18px; font-weight: 700; fill: #1E293B; }
+      .browser-url { font-size: 12px; fill: #64748B; }
+      .nav-link { font-size: 13px; font-weight: 500; fill: #475569; }
+      .hero-h1 { font-size: 26px; font-weight: 800; fill: #0F172A; }
+      .hero-p { font-size: 13px; fill: #64748B; line-height: 1.4; }
+      .card-title { font-size: 14px; font-weight: 600; fill: #0F172A; }
+      .card-sub { font-size: 11px; fill: #64748B; }
+      .price-main { font-size: 16px; font-weight: 700; fill: #0284C7; }
+      .btn-text { font-size: 12px; font-weight: 600; fill: #FFFFFF; }
+      .table-th { font-size: 11px; font-weight: 600; fill: #475569; text-transform: uppercase; }
+      .table-td { font-size: 12px; fill: #1E293B; }
+    </style>
+    <filter id="shadow-frame" x="-2%" y="-1%" width="104%" height="103%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    <filter id="shadow-card" x="-3%" y="-3%" width="106%" height="108%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.05"/>
+    </filter>
+  </defs>
+  <rect width="1240" height="840" fill="#F8FAFC"/>
+  <g transform="translate(20, 30)">
+
+    <!-- Window Frame -->
+    <rect x="0" y="0" width="1200" height="780" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-frame)"/>
+    <!-- Window Top Header -->
+    <path d="M 0 12 Q 0 0 12 0 L 1188 0 Q 1200 0 1200 12 L 1200 40 L 0 40 Z" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+    <!-- Window Controls -->
+    <circle cx="20" cy="20" r="5" fill="#EF4444"/>
+    <circle cx="36" cy="20" r="5" fill="#F59E0B"/>
+    <circle cx="52" cy="20" r="5" fill="#10B981"/>
+    <!-- Browser URL Bar -->
+    <rect x="100" y="8" width="920" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="112" y="24" class="browser-url">https://farmalink.com.co/mapa?med=acetaminofen</text>
+    <!-- Frame Title Tag -->
+    <text x="0" y="-16" class="screen-title">PANTALLA 3: Mapa Geolocalizado de Farmacias</text>
+    
+    <g transform="translate(0, 41)">
+      <rect x="0" y="0" width="1200" height="50" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <rect x="24" y="13" width="24" height="24" rx="5" fill="#0284C7"/>
+      <text x="56" y="30" font-size="14" font-weight="700" fill="#0F172A">Farmalink</text>
+
+      <rect x="200" y="9" width="340" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+      <text x="215" y="29" font-size="11" fill="#1E293B">🔍 Acetaminofén 500mg</text>
+      
+      <rect x="560" y="9" width="220" height="32" rx="6" fill="#E0F2FE" stroke="#BAE6FD"/>
+      <text x="575" y="29" font-size="11" font-weight="600" fill="#0369A1">📍 Bogotá, Chapinero (GPS Activo)</text>
+
+      <rect x="1050" y="9" width="125" height="32" rx="6" fill="#F1F5F9" stroke="#CBD5E1"/>
+      <text x="1065" y="29" font-size="11" font-weight="600" fill="#334155">Filtros (3) ▾</text>
+
+      <!-- SPLIT VIEW -->
+      <g transform="translate(0, 50)">
+        <rect width="380" height="690" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="20" y="30" font-size="14" font-weight="700" fill="#0F172A">Farmacias en el área (5)</text>
+        <text x="20" y="48" font-size="11" fill="#64748B">Ordenadas por: <tspan font-weight="600" fill="#0284C7">Precio más bajo</tspan></text>
+
+        <!-- Pharmacy Card 1 (Active) -->
+        <g transform="translate(15, 65)">
+          <rect width="350" height="125" rx="8" fill="#F0F9FF" stroke="#0284C7" stroke-width="2"/>
+          <text x="15" y="24" font-size="13" font-weight="700" fill="#0F172A">Droguería San Jorge</text>
+          <rect x="255" y="10" width="80" height="20" rx="4" fill="#16A34A"/>
+          <text x="262" y="23" font-size="9" font-weight="700" fill="#FFFFFF">$4.800 COP</text>
+          
+          <text x="15" y="46" font-size="11" fill="#475569">Cra. 13 # 58-22 • A 800m</text>
+          <text x="15" y="64" font-size="11" fill="#059669">✓ Stock disponible para retiro</text>
+          <text x="15" y="82" font-size="11" fill="#64748B">Horario: 7:00 AM - 10:00 PM</text>
+          
+          <rect x="15" y="92" width="155" height="24" rx="4" fill="#0284C7"/>
+          <text x="35" y="108" font-size="10" font-weight="600" fill="#FFFFFF">Cómo llegar (Waze/Gmaps)</text>
+          <rect x="180" y="92" width="155" height="24" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+          <text x="220" y="108" font-size="10" font-weight="600" fill="#334155">Llamar</text>
+        </g>
+
+        <!-- Pharmacy Card 2 -->
+        <g transform="translate(15, 205)">
+          <rect width="350" height="115" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+          <text x="15" y="24" font-size="13" font-weight="700" fill="#0F172A">Droguería La Rebaja 72</text>
+          <rect x="255" y="10" width="80" height="20" rx="4" fill="#E2E8F0"/>
+          <text x="265" y="23" font-size="9" font-weight="700" fill="#1E293B">$5.200 COP</text>
+
+          <text x="15" y="46" font-size="11" fill="#475569">Cl. 72 # 11-40 • A 1.4 km</text>
+          <text x="15" y="64" font-size="11" fill="#059669">✓ Abierto 24 Horas</text>
+          <rect x="15" y="80" width="320" height="24" rx="4" fill="#F8FAFC" stroke="#CBD5E1"/>
+          <text x="120" y="96" font-size="10" font-weight="600" fill="#475569">Ver detalles en mapa</text>
+        </g>
+
+        <!-- Pharmacy Card 3 -->
+        <g transform="translate(15, 335)">
+          <rect width="350" height="115" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+          <text x="15" y="24" font-size="13" font-weight="700" fill="#0F172A">Cruz Verde Calle 85</text>
+          <rect x="255" y="10" width="80" height="20" rx="4" fill="#E2E8F0"/>
+          <text x="265" y="23" font-size="9" font-weight="700" fill="#1E293B">$6.100 COP</text>
+
+          <text x="15" y="46" font-size="11" fill="#475569">Autonorte # 85-15 • A 2.3 km</text>
+          <text x="15" y="64" font-size="11" fill="#B45309">⚠️ Stock limitado</text>
+          <rect x="15" y="80" width="320" height="24" rx="4" fill="#F8FAFC" stroke="#CBD5E1"/>
+          <text x="120" y="96" font-size="10" font-weight="600" fill="#475569">Ver detalles en mapa</text>
+        </g>
+      </g>
+
+      <!-- Right Panel: Interactive Map Simulation -->
+      <g transform="translate(380, 50)">
+        <rect width="820" height="690" fill="#E2E8F0"/>
+        
+        <path d="M 0 140 L 820 180" stroke="#CBD5E1" stroke-width="18"/>
+        <path d="M 0 380 L 820 420" stroke="#CBD5E1" stroke-width="26"/>
+        <path d="M 0 560 L 820 530" stroke="#CBD5E1" stroke-width="14"/>
+
+        <path d="M 220 0 L 260 690" stroke="#CBD5E1" stroke-width="22"/>
+        <path d="M 490 0 L 470 690" stroke="#CBD5E1" stroke-width="28"/>
+        <path d="M 680 0 L 710 690" stroke="#CBD5E1" stroke-width="16"/>
+
+        <text x="280" y="370" font-size="10" fill="#94A3B8" transform="rotate(3 280 370)">AVENIDA CARACAS / CRA 14</text>
+        <text x="495" y="120" font-size="10" fill="#94A3B8" transform="rotate(88 495 120)">CALLE 72</text>
+        <text x="730" y="320" font-size="10" fill="#94A3B8" transform="rotate(85 730 320)">CARRERA 7</text>
+
+        <rect x="520" y="160" width="140" height="180" rx="8" fill="#DCFCE7" opacity="0.6"/>
+        <text x="545" y="250" font-size="11" fill="#15803D" font-weight="600">Parque El Virrey</text>
+
+        <!-- User Location -->
+        <circle cx="340" cy="320" r="24" fill="#0284C7" opacity="0.2"/>
+        <circle cx="340" cy="320" r="10" fill="#0284C7"/>
+        <circle cx="340" cy="320" r="4" fill="#FFFFFF"/>
+        <text x="355" y="325" font-size="10" font-weight="700" fill="#0284C7">TÚ ESTÁS AQUÍ</text>
+
+        <!-- Pin 1 -->
+        <g transform="translate(230, 230)">
+          <circle cx="20" cy="20" r="26" fill="#10B981" opacity="0.25"/>
+          <path d="M 20 5 C 10 5 5 13 5 20 C 5 28 20 45 20 45 C 20 45 35 28 35 20 C 35 13 30 5 20 5 Z" fill="#16A34A"/>
+          <circle cx="20" cy="18" r="6" fill="#FFFFFF"/>
+          
+          <rect x="-25" y="-22" width="90" height="24" rx="12" fill="#15803D" filter="url(#shadow-card)"/>
+          <text x="-15" y="-6" font-size="11" font-weight="700" fill="#FFFFFF">⭐ $4.800</text>
+
+          <g transform="translate(45, -50)">
+            <rect width="210" height="95" rx="6" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5" filter="url(#shadow-frame)"/>
+            <text x="12" y="20" font-size="11" font-weight="700" fill="#0F172A">Droguería San Jorge</text>
+            <text x="12" y="36" font-size="10" fill="#16A34A" font-weight="700">Mejor Precio: $4.800 COP</text>
+            <text x="12" y="52" font-size="9" fill="#64748B">Distancia: 800 metros</text>
+            <rect x="12" y="62" width="186" height="22" rx="4" fill="#0284C7"/>
+            <text x="65" y="77" font-size="10" font-weight="600" fill="#FFFFFF">Ver Detalles</text>
+          </g>
+        </g>
+
+        <!-- Pin 2 -->
+        <g transform="translate(480, 280)">
+          <path d="M 20 5 C 10 5 5 13 5 20 C 5 28 20 45 20 45 C 20 45 35 28 35 20 C 35 13 30 5 20 5 Z" fill="#0284C7"/>
+          <circle cx="20" cy="18" r="6" fill="#FFFFFF"/>
+          <rect x="-15" y="-18" width="70" height="20" rx="10" fill="#0369A1"/>
+          <text x="-5" y="-4" font-size="10" font-weight="700" fill="#FFFFFF">$5.200</text>
+        </g>
+
+        <!-- Pin 3 -->
+        <g transform="translate(680, 140)">
+          <path d="M 20 5 C 10 5 5 13 5 20 C 5 28 20 45 20 45 C 20 45 35 28 35 20 C 35 13 30 5 20 5 Z" fill="#64748B"/>
+          <circle cx="20" cy="18" r="6" fill="#FFFFFF"/>
+          <rect x="-15" y="-18" width="70" height="20" rx="10" fill="#475569"/>
+          <text x="-5" y="-4" font-size="10" font-weight="700" fill="#FFFFFF">$6.100</text>
+        </g>
+
+        <!-- Map Controls -->
+        <g transform="translate(760, 20)">
+          <rect width="36" height="74" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" filter="url(#shadow-card)"/>
+          <text x="12" y="26" font-size="18" font-weight="700" fill="#475569">+</text>
+          <line x1="6" y1="37" x2="30" y2="37" stroke="#E2E8F0"/>
+          <text x="14" y="58" font-size="20" font-weight="700" fill="#475569">-</text>
+        </g>
+      </g>
+    </g>
+    
+  </g>
+</svg>

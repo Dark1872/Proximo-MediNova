@@ -1,0 +1,249 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 840" width="1240" height="840">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+      text { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      .title-canvas { font-size: 28px; font-weight: 700; fill: #0F172A; }
+      .subtitle-canvas { font-size: 15px; font-weight: 400; fill: #64748B; }
+      .badge-tag { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+      .screen-title { font-size: 18px; font-weight: 700; fill: #1E293B; }
+      .browser-url { font-size: 12px; fill: #64748B; }
+      .nav-link { font-size: 13px; font-weight: 500; fill: #475569; }
+      .hero-h1 { font-size: 26px; font-weight: 800; fill: #0F172A; }
+      .hero-p { font-size: 13px; fill: #64748B; line-height: 1.4; }
+      .card-title { font-size: 14px; font-weight: 600; fill: #0F172A; }
+      .card-sub { font-size: 11px; fill: #64748B; }
+      .price-main { font-size: 16px; font-weight: 700; fill: #0284C7; }
+      .btn-text { font-size: 12px; font-weight: 600; fill: #FFFFFF; }
+      .table-th { font-size: 11px; font-weight: 600; fill: #475569; text-transform: uppercase; }
+      .table-td { font-size: 12px; fill: #1E293B; }
+    </style>
+    <filter id="shadow-frame" x="-2%" y="-1%" width="104%" height="103%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    <filter id="shadow-card" x="-3%" y="-3%" width="106%" height="108%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.05"/>
+    </filter>
+  </defs>
+  <rect width="1240" height="840" fill="#F8FAFC"/>
+  <g transform="translate(20, 30)">
+
+    <!-- Window Frame -->
+    <rect x="0" y="0" width="1200" height="780" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-frame)"/>
+    <!-- Window Top Header -->
+    <path d="M 0 12 Q 0 0 12 0 L 1188 0 Q 1200 0 1200 12 L 1200 40 L 0 40 Z" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+    <!-- Window Controls -->
+    <circle cx="20" cy="20" r="5" fill="#EF4444"/>
+    <circle cx="36" cy="20" r="5" fill="#F59E0B"/>
+    <circle cx="52" cy="20" r="5" fill="#10B981"/>
+    <!-- Browser URL Bar -->
+    <rect x="100" y="8" width="920" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="112" y="24" class="browser-url">https://farmalink.com.co/admin/medicamentos</text>
+    <!-- Frame Title Tag -->
+    <text x="0" y="-16" class="screen-title">PANTALLA 4: Dashboard Gestión de Precios & Catálogo (Admin)</text>
+    
+    <g transform="translate(0, 41)">
+      <rect x="0" y="0" width="220" height="740" fill="#0F172A"/>
+      
+      <g transform="translate(20, 20)">
+        <rect width="28" height="28" rx="6" fill="#0284C7"/>
+        <text x="36" y="20" font-size="15" font-weight="700" fill="#FFFFFF">Farmalink<tspan fill="#38BDF8">Admin</tspan></text>
+      </g>
+
+      <g transform="translate(15, 80)">
+        <rect x="0" y="0" width="190" height="38" rx="6" fill="#1E293B"/>
+        <text x="36" y="24" font-size="12" font-weight="600" fill="#FFFFFF">📊 Dashboard General</text>
+        
+        <rect x="0" y="48" width="190" height="38" rx="6" fill="#0284C7"/>
+        <text x="36" y="72" font-size="12" font-weight="700" fill="#FFFFFF">💊 Medicamentos</text>
+
+        <rect x="0" y="96" width="190" height="38" rx="6" fill="transparent"/>
+        <text x="36" y="120" font-size="12" font-weight="500" fill="#94A3B8">🏷️ Actualizar Precios</text>
+
+        <rect x="0" y="144" width="190" height="38" rx="6" fill="transparent"/>
+        <text x="36" y="168" font-size="12" font-weight="500" fill="#94A3B8">🏪 Sucursales &amp; Sedes</text>
+
+        <rect x="0" y="192" width="190" height="38" rx="6" fill="transparent"/>
+        <text x="36" y="216" font-size="12" font-weight="500" fill="#94A3B8">📈 Estadísticas de Búsqueda</text>
+
+        <rect x="0" y="240" width="190" height="38" rx="6" fill="transparent"/>
+        <text x="36" y="264" font-size="12" font-weight="500" fill="#94A3B8">⚙️ Configuración</text>
+      </g>
+
+      <g transform="translate(20, 660)">
+        <circle cx="18" cy="18" r="16" fill="#334155"/>
+        <text x="13" y="23" font-size="12" fill="#FFFFFF">👨‍⚕️</text>
+        <text x="44" y="16" font-size="11" font-weight="600" fill="#FFFFFF">Drog. San Jorge</text>
+        <text x="44" y="30" font-size="10" fill="#94A3B8">Rol: Farmacéutico</text>
+      </g>
+
+      <!-- MAIN CONTENT AREA -->
+      <g transform="translate(220, 0)">
+        <rect width="980" height="56" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="30" y="34" font-size="16" font-weight="700" fill="#0F172A">Gestión de Catálogo e Inventario de Precios</text>
+        
+        <rect x="680" y="12" width="180" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+        <text x="696" y="32" font-size="11" fill="#64748B">Buscar medicamento...</text>
+        
+        <circle cx="890" cy="28" r="14" fill="#F1F5F9"/>
+        <text x="885" y="32" font-size="11">🔔</text>
+
+        <!-- KPI Stat Cards -->
+        <g transform="translate(30, 75)">
+          <g transform="translate(0, 0)">
+            <rect width="215" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+            <text x="16" y="26" font-size="11" font-weight="600" fill="#64748B">MEDICAMENTOS ACTIVOS</text>
+            <text x="16" y="58" font-size="22" font-weight="800" fill="#0F172A">142</text>
+            <text x="16" y="76" font-size="10" font-weight="600" fill="#16A34A">↑ +8 este mes</text>
+          </g>
+
+          <g transform="translate(235, 0)">
+            <rect width="215" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+            <text x="16" y="26" font-size="11" font-weight="600" fill="#64748B">PRECIOS ACTUALIZADOS</text>
+            <text x="16" y="58" font-size="22" font-weight="800" fill="#0284C7">98%</text>
+            <text x="16" y="76" font-size="10" font-weight="600" fill="#16A34A">✓ Al día hoy</text>
+          </g>
+
+          <g transform="translate(470, 0)">
+            <rect width="215" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+            <text x="16" y="26" font-size="11" font-weight="600" fill="#64748B">CLICS / CONSULTAS HOY</text>
+            <text x="16" y="58" font-size="22" font-weight="800" fill="#0F172A">1.840</text>
+            <text x="16" y="76" font-size="10" font-weight="600" fill="#16A34A">↑ +14% vs ayer</text>
+          </g>
+
+          <g transform="translate(705, 0)">
+            <rect width="215" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+            <text x="16" y="26" font-size="11" font-weight="600" fill="#64748B">OFERTA COMPETITIVA</text>
+            <text x="16" y="58" font-size="22" font-weight="800" fill="#16A34A">34 Ítems</text>
+            <text x="16" y="76" font-size="10" font-weight="600" fill="#16A34A">Mejor precio de la zona</text>
+          </g>
+        </g>
+
+        <!-- Actions Bar -->
+        <g transform="translate(30, 185)">
+          <text x="0" y="24" font-size="14" font-weight="700" fill="#0F172A">Listado de Medicamentos Registrados</text>
+          <rect x="735" y="2" width="185" height="34" rx="6" fill="#0284C7"/>
+          <text x="753" y="23" class="btn-text">+ Registrar Medicamento</text>
+        </g>
+
+        <!-- Data Table -->
+        <g transform="translate(30, 230)">
+          <rect width="920" height="470" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#shadow-card)"/>
+          
+          <rect width="920" height="40" fill="#F8FAFC" rx="8 8 0 0" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="25" y="25" class="table-th">Medicamento &amp; Presentación</text>
+          <text x="280" y="25" class="table-th">Laboratorio</text>
+          <text x="440" y="25" class="table-th">Categoría</text>
+          <text x="560" y="25" class="table-th">Precio Actual</text>
+          <text x="680" y="25" class="table-th">Estado</text>
+          <text x="800" y="25" class="table-th">Acciones</text>
+
+          <!-- Table Row 1 -->
+          <g transform="translate(0, 40)">
+            <rect width="920" height="60" fill="#FFFFFF" stroke="#F1F5F9"/>
+            <text x="25" y="28" font-size="12" font-weight="700" fill="#0F172A">Acetaminofén 500mg</text>
+            <text x="25" y="44" font-size="10" fill="#64748B">Caja x 100 tab • INVIMA 2018M</text>
+
+            <text x="280" y="35" class="table-td">Genfar S.A.</text>
+            <text x="440" y="35" class="table-td">Analgésicos</text>
+            <text x="560" y="35" font-size="13" font-weight="700" fill="#15803D">$4.800 COP</text>
+            
+            <rect x="680" y="22" width="65" height="20" rx="4" fill="#DCFCE7"/>
+            <text x="692" y="36" font-size="10" font-weight="700" fill="#166534">Activo</text>
+
+            <rect x="795" y="20" width="50" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+            <text x="808" y="36" font-size="10" fill="#334155">Editar</text>
+            <rect x="855" y="20" width="50" height="24" rx="4" fill="#FEE2E2" stroke="#FCA5A5"/>
+            <text x="866" y="36" font-size="10" fill="#DC2626">Borrar</text>
+          </g>
+
+          <!-- Table Row 2 -->
+          <g transform="translate(0, 100)">
+            <rect width="920" height="60" fill="#FFFFFF" stroke="#F1F5F9"/>
+            <text x="25" y="28" font-size="12" font-weight="700" fill="#0F172A">Amoxicilina 500mg</text>
+            <text x="25" y="44" font-size="10" fill="#64748B">Caja x 30 cap • INVIMA 2019M</text>
+
+            <text x="280" y="35" class="table-td">Laboratorios MK</text>
+            <text x="440" y="35" class="table-td">Antibióticos</text>
+            <text x="560" y="35" font-size="13" font-weight="700" fill="#0F172A">$15.200 COP</text>
+
+            <rect x="680" y="22" width="65" height="20" rx="4" fill="#DCFCE7"/>
+            <text x="692" y="36" font-size="10" font-weight="700" fill="#166534">Activo</text>
+
+            <rect x="795" y="20" width="50" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+            <text x="808" y="36" font-size="10" fill="#334155">Editar</text>
+            <rect x="855" y="20" width="50" height="24" rx="4" fill="#FEE2E2" stroke="#FCA5A5"/>
+            <text x="866" y="36" font-size="10" fill="#DC2626">Borrar</text>
+          </g>
+
+          <!-- Table Row 3 -->
+          <g transform="translate(0, 160)">
+            <rect width="920" height="60" fill="#FFFFFF" stroke="#F1F5F9"/>
+            <text x="25" y="28" font-size="12" font-weight="700" fill="#0F172A">Ibuprofeno 800mg</text>
+            <text x="25" y="44" font-size="10" fill="#64748B">Caja x 20 tab • INVIMA 2017M</text>
+
+            <text x="280" y="35" class="table-td">Lafrancol</text>
+            <text x="440" y="35" class="table-td">Antiinflamatorios</text>
+            <text x="560" y="35" font-size="13" font-weight="700" fill="#0F172A">$8.400 COP</text>
+
+            <rect x="680" y="22" width="65" height="20" rx="4" fill="#DCFCE7"/>
+            <text x="692" y="36" font-size="10" font-weight="700" fill="#166534">Activo</text>
+
+            <rect x="795" y="20" width="50" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+            <text x="808" y="36" font-size="10" fill="#334155">Editar</text>
+            <rect x="855" y="20" width="50" height="24" rx="4" fill="#FEE2E2" stroke="#FCA5A5"/>
+            <text x="866" y="36" font-size="10" fill="#DC2626">Borrar</text>
+          </g>
+
+          <!-- Table Row 4 -->
+          <g transform="translate(0, 220)">
+            <rect width="920" height="60" fill="#FFFFFF" stroke="#F1F5F9"/>
+            <text x="25" y="28" font-size="12" font-weight="700" fill="#0F172A">Loratadina 10mg</text>
+            <text x="25" y="44" font-size="10" fill="#64748B">Caja x 10 tab • INVIMA 2020M</text>
+
+            <text x="280" y="35" class="table-td">Tecnoquímicas</text>
+            <text x="440" y="35" class="table-td">Antialérgicos</text>
+            <text x="560" y="35" font-size="13" font-weight="700" fill="#B45309">$5.900 COP</text>
+
+            <rect x="680" y="22" width="65" height="20" rx="4" fill="#FEF3C7"/>
+            <text x="688" y="36" font-size="10" font-weight="700" fill="#B45309">Bajo Stock</text>
+
+            <rect x="795" y="20" width="50" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+            <text x="808" y="36" font-size="10" fill="#334155">Editar</text>
+            <rect x="855" y="20" width="50" height="24" rx="4" fill="#FEE2E2" stroke="#FCA5A5"/>
+            <text x="866" y="36" font-size="10" fill="#DC2626">Borrar</text>
+          </g>
+
+          <!-- Table Row 5 -->
+          <g transform="translate(0, 280)">
+            <rect width="920" height="60" fill="#FFFFFF" stroke="#F1F5F9"/>
+            <text x="25" y="28" font-size="12" font-weight="700" fill="#0F172A">Losartán Potásico 50mg</text>
+            <text x="25" y="44" font-size="10" fill="#64748B">Caja x 30 tab • INVIMA 2016M</text>
+
+            <text x="280" y="35" class="table-td">La Sante</text>
+            <text x="440" y="35" class="table-td">Cardiovascular</text>
+            <text x="560" y="35" font-size="13" font-weight="700" fill="#0F172A">$9.500 COP</text>
+
+            <rect x="680" y="22" width="65" height="20" rx="4" fill="#DCFCE7"/>
+            <text x="692" y="36" font-size="10" font-weight="700" fill="#166534">Activo</text>
+
+            <rect x="795" y="20" width="50" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+            <text x="808" y="36" font-size="10" fill="#334155">Editar</text>
+            <rect x="855" y="20" width="50" height="24" rx="4" fill="#FEE2E2" stroke="#FCA5A5"/>
+            <text x="866" y="36" font-size="10" fill="#DC2626">Borrar</text>
+          </g>
+          
+          <!-- Pagination -->
+          <g transform="translate(25, 410)">
+            <text x="0" y="25" font-size="11" fill="#64748B">Mostrando 1 a 5 de 142 registros</text>
+            <rect x="700" y="8" width="90" height="28" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+            <text x="718" y="26" font-size="11" fill="#475569">Anterior</text>
+            <rect x="805" y="8" width="90" height="28" rx="4" fill="#0284C7"/>
+            <text x="822" y="26" class="btn-text">Siguiente</text>
+          </g>
+        </g>
+      </g>
+    </g>
+    
+  </g>
+</svg>
