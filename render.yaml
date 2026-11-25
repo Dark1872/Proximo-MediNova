@@ -13,8 +13,12 @@ services:
         value: production
       - key: DATABASE_URL
         sync: false
+      # Secreto compartido: debe tener EXACTAMENTE el mismo valor en Backend y Gateway.
+      # Se introduce manualmente en el panel de Render (sync: false). Nunca se versiona.
       - key: JWT_SECRET
-        generateValue: true
+        sync: false
+      - key: INTERNAL_API_SECRET
+        sync: false
 
   # Gateway
   - type: web
@@ -28,13 +32,33 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      # BACKEND_URL — URL PÚBLICA del Backend (pasa por el proxy público de Render/Cloudflare,
+      # que puede responder 429 "Just a moment..." a las llamadas servidor-a-servidor).
+      # Recomendado: usar la RED PRIVADA de Render. Requisitos (docs de Render, "Private network"):
+      #   - Gateway y Backend en la misma región (oregon) y el mismo workspace.
+      #   - El Backend NO puede estar en plan Free: los web services Free pueden enviar
+      #     tráfico privado pero no recibirlo.
+      # Valor privado: panel del Backend > Connect > Internal (formato "nombre-xxxx:puerto",
+      # sin esquema; el Gateway antepone http:// automáticamente). Alternativa documentada en el
+      # Blueprint spec: fromService { type: web, name: farmalink-backend, property: hostport }.
+      # Red privada (requiere Backend en plan de pago, misma región y workspace).
       - key: BACKEND_URL
         fromService:
           type: web
           name: farmalink-backend
+          property: hostport
+      # Alternativa pública: solo se usa si la red privada no responde al arrancar (queda en el log).
+      - key: BACKEND_PUBLIC_URL
+        fromService:
+          type: web
+          name: farmalink-backend
           envVarKey: RENDER_EXTERNAL_URL
+      # Secreto compartido: debe tener EXACTAMENTE el mismo valor en Backend y Gateway.
+      # Se introduce manualmente en el panel de Render (sync: false). Nunca se versiona.
       - key: JWT_SECRET
-        value: AZaeieR45nFNjMFG0bEE63fAUNcBXvLFA3T2kK9Aq+c=
+        sync: false
+      - key: INTERNAL_API_SECRET
+        sync: false
 
   # Frontend
   - type: web
