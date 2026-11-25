@@ -1,7 +1,8 @@
 import express from 'express';
 import Database from '../shared/db.js';
-import { requireAuth } from '../shared/authMiddleware.js';
+import { requireAuth, requireAdmin, UserRole } from '../shared/authMiddleware.js';
 import { hashPassword } from '../shared/password.js';
+import { createUsuario, VALID_ROLES } from './createUsuario.js';
 
 const router = express.Router();
 
@@ -71,12 +72,14 @@ router.get('/public/equipo', async (_req, res) => {
 });
 
 // GET /api/usuarios/public/:id — Perfil público individual (sin auth)
+// Solo expone perfiles marcados como miembros del equipo; el resto de usuarios responde 404.
 router.get('/public/:id', async (req, res) => {
   try {
     const pool = Database.getInstance().getPool();
+    await withMigration(pool);
     const result = await pool.query(
       `SELECT id, name, role, phone, profile_picture, bio, created_at
-       FROM public.usuarios WHERE id = $1`,
+       FROM public.usuarios WHERE id = $1 AND is_team_member = true`,
       [req.params.id]
     );
     if (result.rows.length === 0) {
@@ -157,8 +160,16 @@ router.patch('/:id/team-member', requireAuth, async (req, res) => {
   }
 });
 
-// GET /api/usuarios/:id - Obtener usuario por ID
-router.get('/:id', async (req, res) => {
+// GET /api/usuarios/:id - Obtener usuario por ID (el propio usuario o un administrador)
+router.get('/:id', requireAuth, async (req, res) => {
+  const usuarioActual = (req as any).usuarioActual;
+  const idParam = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  if (!/^\d+$/.test(String(idParam))) {
+    return res.status(400).json({ success: false, message: 'ID inválido' });
+  }
+  if (usuarioActual.role !== 'admin' && String(usuarioActual.id) !== String(idParam)) {
+    return res.status(403).json({ success: false, message: 'No tienes permiso para consultar este usuario' });
+  }
   try {
     const pool = Database.getInstance().getPool();
     const result = await pool.query(
@@ -174,44 +185,49 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/usuarios - Crear usuario
-router.post('/', async (req, res) => {
-  const { name, email, password, role } = req.body;
-  const errors: string[] = [];
-  if (!name || name.trim().length < 2) errors.push('Nombre: mínimo 2 caracteres');
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('Email inválido');
-  if (!password || password.length < 4) errors.push('Contraseña: mínimo 4 caracteres');
-  if (!role || !['cliente', 'farmaceutico', 'admin'].includes(role)) errors.push('Rol inválido');
-  if (errors.length > 0) return res.status(400).json({ success: false, errors });
-
-  try {
-    const pool = Database.getInstance().getPool();
-    const em = email.trim().toLowerCase();
-    const exists = await pool.query('SELECT id FROM public.usuarios WHERE email = $1', [em]);
-    if (exists.rows.length > 0) {
-      return res.status(409).json({ success: false, errors: ['El email ya está registrado'] });
-    }
-    const hashed = await hashPassword(password);
-    const result = await pool.query(
-      'INSERT INTO public.usuarios (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role, created_at',
-      [name.trim(), em, hashed, role]
-    );
-    res.status(201).json({ success: true, data: result.rows[0] });
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: 'Error al crear usuario', error: err.message });
+// POST /api/usuarios - Creación ADMINISTRATIVA de usuarios (cualquier rol).
+// requireAdmin obtiene el rol real del solicitante desde la base de datos.
+// El registro público está en POST /api/auth/register y siempre crea 'cliente'.
+router.post('/', requireAdmin, async (req, res) => {
+  const { name, email, password, role } = req.body || {};
+  if (role !== undefined && !VALID_ROLES.includes(role)) {
+    return res.status(400).json({ success: false, errors: ['Rol inválido'] });
   }
+  const roleAsignado: UserRole = role ?? 'cliente';
+  const result = await createUsuario({ name, email, password }, roleAsignado);
+  res.status(result.status).json(result.body);
 });
 
 // PUT /api/usuarios/:id - Actualizar usuario
-// Nota: la autenticación y autorización la maneja el gateway; el backend confía en él
-router.put('/:id', async (req, res) => {
+router.put('/:id', requireAuth, async (req, res) => {
+  const usuarioActual = (req as any).usuarioActual;
+  const idParam = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  if (!/^\d+$/.test(String(idParam))) {
+    return res.status(400).json({ success: false, message: 'ID inválido' });
+  }
+  const idObjetivo = parseInt(idParam, 10);
+
+  if (usuarioActual.role !== 'admin' && Number(usuarioActual.id) !== idObjetivo) {
+    return res.status(403).json({ success: false, message: 'No tienes permiso para editar este usuario' });
+  }
+
   const {
     name, email, role, password, telefono, avatar_url, preferencias,
-  } = req.body;
+  } = req.body || {};
+  const { phone, bio, profile_picture } = req.body || {};
+
+  // Solo administradores pueden alterar el rol; para usuarios estándar se ignora
+  const roleAActualizar = usuarioActual.role === 'admin' ? role : undefined;
+
   const errors: string[] = [];
-  if (name !== undefined && name.trim().length < 2) errors.push('Nombre: mínimo 2 caracteres');
-  if (email !== undefined && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('Email inválido');
-  if (role !== undefined && !['cliente', 'farmaceutico', 'admin'].includes(role)) errors.push('Rol inválido');
+  if (name !== undefined && (typeof name !== 'string' || name.trim().length < 2)) errors.push('Nombre: mínimo 2 caracteres');
+  if (email !== undefined && (typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) errors.push('Email inválido');
+  // Campos de perfil: texto o null (null borra el valor). Otros tipos se rechazan con 400 en lugar de provocar un 500.
+  for (const [campo, valor] of [['phone', phone], ['bio', bio], ['profile_picture', profile_picture]] as const) {
+    if (valor !== undefined && valor !== null && typeof valor !== 'string') errors.push(`${campo}: debe ser texto o null`);
+  }
+  if (typeof phone === 'string' && phone.trim().length > 20) errors.push('phone: máximo 20 caracteres');
+  if (roleAActualizar !== undefined && !['cliente', 'farmaceutico', 'admin'].includes(roleAActualizar)) errors.push('Rol inválido');
   if (telefono !== undefined && telefono !== null && String(telefono).length > 20) {
     errors.push('Teléfono: máximo 20 caracteres');
   }
@@ -238,8 +254,10 @@ router.put('/:id', async (req, res) => {
 
   try {
     const pool = Database.getInstance().getPool();
+    // Garantiza que existan las columnas de perfil (phone, bio, profile_picture) antes de escribirlas.
+    await withMigration(pool);
     if (email) {
-      const exists = await pool.query('SELECT id FROM public.usuarios WHERE email = $1 AND id != $2', [email, req.params.id]);
+      const exists = await pool.query('SELECT id FROM public.usuarios WHERE email = $1 AND id != $2', [email.trim().toLowerCase(), idObjetivo]);
       if (exists.rows.length > 0) {
         return res.status(409).json({ success: false, errors: ['El email ya está registrado'] });
       }
@@ -250,20 +268,21 @@ router.put('/:id', async (req, res) => {
     let idx = 1;
     if (name !== undefined) { setClauses.push(`name = $${idx++}`); values.push(name.trim()); }
     if (email !== undefined) { setClauses.push(`email = $${idx++}`); values.push(email.trim().toLowerCase()); }
-    if (role !== undefined) { setClauses.push(`role = $${idx++}`); values.push(role); }
+    if (roleAActualizar !== undefined) { setClauses.push(`role = $${idx++}`); values.push(roleAActualizar); }
     if (password !== undefined && String(password).length >= 4) {
       setClauses.push(`password = $${idx++}`);
       values.push(await hashPassword(String(password)));
     }
 
     // Handle profile fields (phone, bio, profile_picture)
-    if (req.body.phone !== undefined) { setClauses.push(`phone = $${idx++}`); values.push(req.body.phone?.trim() || null); }
-    if (req.body.bio !== undefined) { setClauses.push(`bio = $${idx++}`); values.push(req.body.bio?.trim() || null); }
-    if (req.body.profile_picture !== undefined) { setClauses.push(`profile_picture = $${idx++}`); values.push(req.body.profile_picture?.trim() || null); }
+    if (phone !== undefined) { setClauses.push(`phone = $${idx++}`); values.push(phone?.trim() || null); }
+    if (bio !== undefined) { setClauses.push(`bio = $${idx++}`); values.push(bio?.trim() || null); }
+    if (profile_picture !== undefined) { setClauses.push(`profile_picture = $${idx++}`); values.push(profile_picture?.trim() || null); }
+    const pideCamposPerfil = phone !== undefined || bio !== undefined || profile_picture !== undefined;
 
     if (setClauses.length === 0) return res.status(400).json({ success: false, message: 'Nada que actualizar' });
 
-    values.push(req.params.id);
+    values.push(idObjetivo);
     const returningCols: string[] = ['id', 'name', 'email', 'role', 'phone', 'profile_picture', 'bio', 'created_at'];
     let result;
     try {
@@ -275,6 +294,11 @@ router.put('/:id', async (req, res) => {
     } catch (err: any) {
       const msg = String(err?.message || err);
       if (msg.includes('column') && msg.includes('does not exist')) {
+        // Si se pidieron campos de perfil y sus columnas no existen, no se informa un éxito falso.
+        if (pideCamposPerfil) {
+          console.error('[Usuarios] PUT: columnas de perfil ausentes en la BD:', msg);
+          return res.status(500).json({ success: false, message: 'No se pudieron guardar los campos de perfil' });
+        }
         // Fallback: sólo columnas base.
         const fallbackClauses: string[] = [];
         const fallbackValues: unknown[] = [];
@@ -282,7 +306,7 @@ router.put('/:id', async (req, res) => {
 
         if (name !== undefined) { fallbackClauses.push(`name = $${fIdx++}`); fallbackValues.push(name.trim()); }
         if (email !== undefined) { fallbackClauses.push(`email = $${fIdx++}`); fallbackValues.push(email.trim().toLowerCase()); }
-        if (role !== undefined) { fallbackClauses.push(`role = $${fIdx++}`); fallbackValues.push(role); }
+        if (roleAActualizar !== undefined) { fallbackClauses.push(`role = $${fIdx++}`); fallbackValues.push(roleAActualizar); }
         if (password !== undefined && String(password).length >= 4) {
           fallbackClauses.push(`password = $${fIdx++}`);
           fallbackValues.push(await hashPassword(String(password)));
@@ -290,7 +314,7 @@ router.put('/:id', async (req, res) => {
 
         if (fallbackClauses.length === 0) return res.status(400).json({ success: false, message: 'Nada que actualizar' });
 
-        fallbackValues.push(req.params.id);
+        fallbackValues.push(idObjetivo);
         const fallbackReturning = ['id', 'name', 'email', 'role', 'created_at'];
         result = await pool.query(
           `UPDATE public.usuarios SET ${fallbackClauses.join(', ')} WHERE id = $${fIdx}
@@ -308,8 +332,8 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE /api/usuarios/:id - Eliminar usuario
-router.delete('/:id', async (req, res) => {
+// DELETE /api/usuarios/:id - Eliminar usuario (solo admin)
+router.delete('/:id', requireAdmin, async (req, res) => {
   try {
     const pool = Database.getInstance().getPool();
     const result = await pool.query('DELETE FROM public.usuarios WHERE id = $1 RETURNING id', [req.params.id]);

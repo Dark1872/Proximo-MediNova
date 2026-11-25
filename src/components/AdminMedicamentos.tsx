@@ -3,6 +3,7 @@ import { useToast } from '../hooks/useToast';
 import { AdminUsuarios } from './admin/AdminUsuarios';
 // @ts-ignore: allow importing stylesheet without declared module types
 import './AdminMedicamentos.css';
+import { requireStoredToken } from '../hooks/useSession';
 
 interface Categoria {
   id: number;
@@ -60,23 +61,12 @@ const EMPTY_FORM: FormData = {
   name: '', lab: '', active: true, description: '', categoria_id: '', precio: '',
 };
 
-const TOKEN_KEY = 'token';
-
 const GATEWAY = (import.meta as any).env?.VITE_API_URL || '';
 
+// Token de la sesión iniciada por el administrador mediante el login normal.
+// Sin sesión se lanza un error (capturado por cada llamada): no existe login automático.
 async function getToken(): Promise<string> {
-  let token = localStorage.getItem(TOKEN_KEY);
-  if (!token) {
-    const res = await fetch(`${GATEWAY}/api/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: 'admin@farmalink.com' }),
-    });
-    const data = await res.json();
-    token = data.token;
-    localStorage.setItem(TOKEN_KEY, token!);
-  }
-  return token!;
+  return requireStoredToken();
 }
 
 export function AdminMedicamentos() {

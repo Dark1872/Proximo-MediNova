@@ -3,6 +3,7 @@ import type { Sugerencia } from '../../types';
 import { PharmacyMap } from '../common/PharmacyMap';
 import { useToast } from '../../hooks/useToast';
 import { useCart } from '../../hooks/useCart';
+import { useVerifiedRole } from '../../hooks/useSession';
 import './ProductoDetalle.css';
 
 const GATEWAY = (import.meta as any).env?.VITE_API_URL || '';
@@ -602,7 +603,9 @@ export function ProductoDetalle({
   const [formFarmaciaId, setFormFarmaciaId] = useState('');
   const [formPrecio, setFormPrecio] = useState('');
   const [savingPrice, setSavingPrice] = useState(false);
-  const isAdmin = !!localStorage.getItem('token');
+  // Rol verificado por el servidor (GET /api/usuarios/me). Tener un token NO implica ser administrador.
+  // Es solo una decisión de interfaz: el Backend exige rol admin (desde la BD) para modificar precios.
+  const isAdmin = useVerifiedRole() === 'admin';
 
   const { addToast } = useToast();
   const { addToCart } = useCart();
@@ -631,6 +634,10 @@ export function ProductoDetalle({
   };
 
   const handleTogglePriceForm = () => {
+    if (!isAdmin) {
+      setShowPriceForm(false);
+      return;
+    }
     setShowPriceForm(v => {
       const next = !v;
       if (next) loadFarmacias();
@@ -640,6 +647,10 @@ export function ProductoDetalle({
 
   const handleSavePrice = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isAdmin) {
+      addToast('Solo un administrador puede registrar precios.', 'error');
+      return;
+    }
     if (!formFarmaciaId || !formPrecio) {
       addToast('Completa todos los campos obligatorios.', 'error');
       return;

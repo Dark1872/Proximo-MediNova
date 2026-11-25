@@ -4,11 +4,15 @@ import { PrecioStrategyFactory } from './PrecioStrategyFactory.js';
 import { PrecioItem } from './strategies/PrecioStrategy.js';
 import { validateUpdatePrecio } from './PrecioDTO.js';
 import { PrecioHistorialService } from './PrecioHistorialService.js';
-import { requireAuth } from '../shared/authMiddleware.js';
+import { requireAuth, requireRole } from '../shared/authMiddleware.js';
+
+// Roles autorizados para crear o modificar precios. El modelo de negocio documentado
+// (panel de administración protegido con requireRole="admin") solo contempla 'admin'.
+const requirePriceManager = requireRole('admin');
 
 const router = Router();
 
-router.get('/', async (_req: Request, res: Response): Promise<void> => {
+router.get('/', requireAuth, async (_req: Request, res: Response): Promise<void> => {
   try {
     const pool = Database.getInstance().getPool();
     const result = await pool.query(`
@@ -94,7 +98,7 @@ router.get('/comparar/:medicamentoId', requireAuth, async (req: Request, res: Re
   }
 });
 
-router.put('/:id', async (req: Request, res: Response): Promise<void> => {
+router.put('/:id', requirePriceManager, async (req: Request, res: Response): Promise<void> => {
   try {
     const { id: paramId } = req.params;
     const idString = Array.isArray(paramId) ? paramId[0] : paramId;
@@ -131,7 +135,7 @@ router.put('/:id', async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const quienCambio = req.body.quien_cambio || req.body.userEmail || req.headers['x-user-email'] as string || 'sistema';
+    const quienCambio = (req as any).usuarioActual?.email || req.body.quien_cambio || 'sistema';
 
     await PrecioHistorialService.registrarCambio({
       precio_id: id,
@@ -170,7 +174,7 @@ router.put('/:id', async (req: Request, res: Response): Promise<void> => {
   }
 });
 
-router.patch('/:id', async (req: Request, res: Response): Promise<void> => {
+router.patch('/:id', requirePriceManager, async (req: Request, res: Response): Promise<void> => {
   try {
     const { id: paramId } = req.params;
     const idString = Array.isArray(paramId) ? paramId[0] : paramId;
@@ -204,7 +208,7 @@ router.patch('/:id', async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const quienCambio = req.body.quien_cambio || req.body.userEmail || req.headers['x-user-email'] as string || 'sistema';
+    const quienCambio = (req as any).usuarioActual?.email || req.body.quien_cambio || 'sistema';
 
     if (req.body.precio !== undefined && req.body.precio !== current.precio) {
       await PrecioHistorialService.registrarCambio({
@@ -235,7 +239,7 @@ router.patch('/:id', async (req: Request, res: Response): Promise<void> => {
   }
 });
 
-router.post('/', async (req: Request, res: Response): Promise<void> => {
+router.post('/', requirePriceManager, async (req: Request, res: Response): Promise<void> => {
   try {
     const { medicamento_id, farmacia_id, precio, userEmail } = req.body;
 
@@ -272,7 +276,7 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
       [medIdNum, farIdNum]
     );
 
-    const quienCambio = userEmail || req.headers['x-user-email'] as string || 'sistema';
+    const quienCambio = (req as any).usuarioActual?.email || userEmail || 'sistema';
 
     if (existingResult.rows.length > 0) {
       const current = existingResult.rows[0];

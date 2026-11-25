@@ -94,13 +94,6 @@ export default function Login({ onLoginSuccess, onNavigateToRegister }: LoginPro
     await doLogin(email, password);
   };
 
-  const handleDemoLogin = async (role: 'user' | 'admin') => {
-    const credentials = role === 'admin'
-      ? { email: 'admin@farmalink.com', password: '1234' }
-      : { email: 'user@farmalink.com',  password: '1234' };
-    await doLogin(credentials.email, credentials.password);
-  };
-
   const hayErrores = !!emailError || !!passwordError;
 
   return (
@@ -110,21 +103,6 @@ export default function Login({ onLoginSuccess, onNavigateToRegister }: LoginPro
         <p className="login-subtitle">Bienvenido a FarmaLink</p>
 
         {error && <div className="login-error">{error}</div>}
-
-        <div className="demo-buttons">
-          <button type="button" className="demo-btn demo-btn-user"
-            onClick={() => handleDemoLogin('user')} disabled={loading}>
-            Demo Usuario
-          </button>
-          <button type="button" className="demo-btn demo-btn-admin"
-            onClick={() => handleDemoLogin('admin')} disabled={loading}>
-            Demo Admin
-          </button>
-        </div>
-
-        <div className="login-divider">
-          <span>o inicia con tu cuenta</span>
-        </div>
 
         <form onSubmit={handleSubmit} className="login-form" noValidate>
           <div className="form-group">
