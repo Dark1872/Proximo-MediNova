@@ -3,6 +3,9 @@ services:
   - type: web
     name: farmalink-backend
     env: node
+    # Free: se suspende tras 15 min sin tráfico y no recibe red privada (el Gateway usa BACKEND_PUBLIC_URL).
+    # Al pasar a starter, el Gateway cambia solo a la red privada (BACKEND_URL hostport).
+    plan: free
     region: oregon
     rootDir: packages/backend
     buildCommand: npm install && npm run build
@@ -24,6 +27,7 @@ services:
   - type: web
     name: farmalink-gateway
     env: node
+    plan: free
     region: oregon
     rootDir: packages/gateway
     buildCommand: npm install
